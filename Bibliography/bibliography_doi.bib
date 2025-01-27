@@ -1,10 +1,22 @@
-@article{static_dynamic_verification,
-   abstract = {We present our work on the collaborative use of dynamic and static analysis tools for the verification of software written in the OCaml language. We build upon Gospel, a specification language for OCaml that can be used both in dynamic and static analyses. We employ Ortac, for runtime assertion checking, and Cameleer and CFML for the deductive verification of OCaml code. We report on the use of such tools to build a case study of collaborative analysis of a non-trivial OCaml program. This shows how these tools nicely complement each others, while at the same highlights the differences when writing specification targeting dynamic or static analysis methods.},
-   author = {Tiago Lopes Soares and Ion Chirica and Mário Pereira},
-   month = {7},
-   title = {Static and Dynamic Verification of OCaml Programs: The Gospel Ecosystem (Extended Version)},
-   url = {http://arxiv.org/abs/2407.17289},
-   year = {2024},
+@inproceedings{static_and_dynamic_verification_of_ocaml_programs,
+  author       = {Tiago Lopes Soares and
+                  Ion Chirica and
+                  M{\'{a}}rio Pereira},
+  editor       = {Tiziana Margaria and
+                  Bernhard Steffen},
+  title        = {Static and Dynamic Verification of OCaml Programs: The Gospel Ecosystem},
+  booktitle    = {Leveraging Applications of Formal Methods, Verification and Validation.
+                  Specification and Verification - 12th International Symposium, ISoLA
+                  2024, Crete, Greece, October 27-31, 2024, Proceedings, Part {III}},
+  series       = {Lecture Notes in Computer Science},
+  volume       = {15221},
+  pages        = {247--265},
+  publisher    = {Springer},
+  year         = {2024},
+  doi          = {10.1007/978-3-031-75380-0\_14},
+  timestamp    = {Fri, 08 Nov 2024 20:51:09 +0100},
+  biburl       = {https://dblp.org/rec/conf/isola/SoaresCP24.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 @misc{ortac_runtime_assertion_checking,
    abstract = {Runtime assertion checking (RAC) is a convenient set of techniques that lets developers abstract away the process of verifying the correctness of their programs by writing formal specifications and automating their verification at runtime. In this work, we present ortac, a runtime assertion checking tool for OCaml libraries and programs. OCaml is a functional programming language in which idioms rely on an expressive type system, modules, and interface abstractions. ortac consumes interfaces annotated with type invariants and function contracts and produces code wrappers with the same signature that check these specifications at runtime. It provides a flexible framework for traditional assertion checking, monitoring mis-behaviors without interruptions, and automated fuzz testing for OCaml programs. This paper presents an overview of ortac features and highlights its main design choices.},
