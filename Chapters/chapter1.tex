@@ -14,15 +14,39 @@
 \section{Motivation/Context}
 \label{sec:motivation_context}
 
-\begin{itemize}
-    \item Describe current world problems/difficulties
-    \item Describe current solutions for said problems/difficulties
-    \item Present alternatives
-    \item Give examples where above alternatives might be helpful
-\end{itemize}
+Errors are closely connected with human performance, and they are a part of everyday life. 
+They can be found in all areas of human activity, and they can have different consequences, 
+from minor inconveniences to catastrophic events. In the context of software development, 
+errors can have a significant impact on the quality of the software, leading to financial losses, 
+loss of reputation, and even loss of life. The complexity of software systems has been increasing 
+over the years, and it is becoming more and more challenging to develop error-free software. 
+This complexity is due to the increasing size of software systems, the increasing number of features, 
+and the increasing number of interactions between different components. As a result, software 
+developers are facing new challenges in developing software that is reliable, secure, and efficient.
+
+Software verification consists of checking whether a software system meets its requirements and
+specifications. In the particular case of OCaml programs, static and dynamic verification are two powerful 
+techniques that can be used to verify the correctness of OCaml programs. Static verification consists of 
+analyzing the program's code without executing it, using techniques such as type checking, abstract 
+interpretation, and model checking. These techniques can detect potential errors and prove properties 
+about the program, such as the absence of certain types of runtime errors.
+
+Dynamic verification, on the other hand, involves executing the program and observing its behavior 
+to ensure it meets its specifications. Techniques such as testing, runtime assertion checking, and 
+formal methods like model-based testing can be used to dynamically verify OCaml programs. 
+These techniques can help identify errors that may not be detectable through static analysis alone.
+
+The two can  be combined to provide a more exhaustive verification of OCaml programs, 
+collaborating for a more structured and correct code. This can even be more useful in the context of 
+systems that have a direct impact in everyday life.
+
+For example, \textit{monitors} follow a set of steps to ensure that the system is correctly implemented. 
+First, static verification is performed to ensure that the code may not have any errors during compilation.
+Then, for the parts of the code that the previous step could not verify, dynamic verification is performed 
+to verify the code's behavior during execution. This process is repeated until the system is fully verified.
 
 \section{Problem Definition}
-\label{sub:problem_definition}
+\label{sec:problem_definition}
 
 \begin{itemize}
     \item State the usefulness of the thesis theme to solving real world problems
@@ -41,7 +65,7 @@
 \end{itemize}
 
 \section{Expected Contributions}
-\label{sub:expected_Contributions}
+\label{sec:expected_Contributions}
 
 \begin{itemize}
     \item Describe how this work is expected to help with the current problems
