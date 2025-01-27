@@ -11,22 +11,69 @@
 \chapter{Background}
 \label{cha:background}
 
-\textbf{NOTA:} Sections 3.3 \& 3.5; 1 \& 2 of \cite{pyramid_of_formal_verification}.
+\textbf{NOTA:} Sections 3.3 \& 3.5; 1 \& 2 of \cite{Brain2025}.
 
 \section{Formal Verification}
 \label{sec:formal_verification}
 
+Formal Verification is the process of using mathematical methods to rigorously 
+prove the correctness of a software system. Its goal is to ensure that a system 
+is compliant with a given set of specifications, leaving no room for ambiguities or 
+unforeseen errors. Unlike traditional testing, which can only cover a 
+finite set of scenarios, formal verification provides a guarantee of 
+correctness for all possible inputs and states within the specified domain~\cite{Brain2025}.
+
 \section{OCaml}
 \label{sec:ocaml}
+
+OCaml is a functional programming language with a strong type system and a powerful
+module system. It supports imperative, functional, and object-oriented programming 
+paradigms, making it a versatile choice for various types of software development. 
+OCaml's type inference system helps catch errors at compile time, reducing the 
+likelihood of runtime errors and improving code reliability.
 
 \subsection{Language Overview} % (fold)
 \label{sub:language_overview}
 
+Being a functional language, OCaml encourages the use of higher-order functions,
+which can lead to programmers \textit{"staying away"} from this language. However,
+OCaml's expressive type system and powerful abstractions can lead to more robust
+and maintainable code, especially in large and complex systems.
+
 \subsection{Modules and Functors} % (fold)
 \label{sub:modules_and_functors}
 
+Modules and functors are core features of OCaml’s type and abstraction system. 
+They allow for organizing and structuring code effectively, enabling encapsulation, 
+reuse, and flexibility.
+
+A module is a collection of definitions, such as types, functions, and values, 
+grouped under a single name. Modules provide namespaces to prevent naming conflicts 
+and enable better code organization.
+
+\begin{minted}{ocaml}
+    module type Stack = sig
+        type 'a t
+        val empty : 'a t
+        val push : 'a -> 'a t -> 'a t
+        val pop : 'a t -> 'a t
+        val top : 'a t -> 'a
+    end
+\end{minted}
+
 \subsection{Higher Order Functions}
 \label{sub:higher_order_functions}
+
+Higher-order functions are functions that can take other functions as arguments 
+or return them as results. They are a cornerstone of functional programming in OCaml.
+They allow 
+for concise and expressive code, enabling powerful abstractions and code reuse. Here is an example of a higher-order function in OCaml:
+
+\begin{minted}{ocaml}
+    let apply_twice f x = f (f x)
+\end{minted}
+
+In this example, \texttt{apply\_twice} is a higher-order function that takes a function \texttt{f} and an argument \texttt{x}, and applies \texttt{f} to \texttt{x} twice.
 
 \section{GOSPEL \& Cameleer}
 \label{sec:gospel_and_cameleer}

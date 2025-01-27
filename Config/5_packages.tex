@@ -51,20 +51,21 @@
 % \usepackage{algorithm2e}
 % \RestyleAlgo{ruled}
 
-% \usepackage{minted}    % Fontification of source code listings
+\usepackage{minted}    % Fontification of source code listings
 
 % \usepackage{listings}    % Fontification of source code listingsConfig/5_packages.tex
-%                          % In alternative, use the package “minted” (highly recomended)
+                         % In alternative, use the package “minted” (highly recomended)
+
+\usepackage{xcolor}
 
 % \lstset{
-%     captionpos=t,
-%     basicstyle={\ttfamily\footnotesize},
-%     numbers=left,
-%     numberstyle={\ttfamily\tiny},
+%     keywordstyle=\color{blue},
+%     commentstyle=\color{green!50!black},
+%     captionpos=b,
+%     basicstyle={\ttfamily},
 %     tabsize=2,
-%     language=Java,
+%     language=[Objective]Caml,
 %     float,
-%     frame=single,
 %     columns=fullflexible,
 %     breaklines=true,
 %     postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
