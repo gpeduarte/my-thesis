@@ -26,24 +26,24 @@ correctness for all possible inputs and states within the specified domain~\cite
 \section{OCaml}
 \label{sec:ocaml}
 
-OCaml is a functional programming language with a strong type system and a powerful
+\ocaml is a functional programming language with a strong type system and a powerful
 module system. It supports imperative, functional, and object-oriented programming 
 paradigms, making it a versatile choice for various types of software development. 
-OCaml's type inference system helps catch errors at compile time, reducing the 
+\ocaml's type inference system helps catch errors at compile time, reducing the 
 likelihood of runtime errors and improving code reliability.
 
 \subsection{Language Overview} % (fold)
 \label{sub:language_overview}
 
-Being a functional language, OCaml encourages the use of higher-order functions,
-which can lead to programmers \textit{"staying away"} from this language. However,
-OCaml's expressive type system and powerful abstractions can lead to more robust
+Being a functional language, \ocaml encourages the use of higher-order functions, 
+which can accomodate for more generic solutions for a variety of problems. However,
+\ocaml's expressive type system and powerful abstractions can lead to more robust
 and maintainable code, especially in large and complex systems.
 
 \subsection{Modules and Functors} % (fold)
 \label{sub:modules_and_functors}
 
-Modules and functors are core features of OCaml’s type and abstraction system. 
+Modules and functors are core features of \ocaml’s type and abstraction system. 
 They allow for organizing and structuring code effectively, enabling encapsulation, 
 reuse, and flexibility.
 
@@ -65,18 +65,32 @@ and enable better code organization.
 \label{sub:higher_order_functions}
 
 Higher-order functions are functions that can take other functions as arguments 
-or return them as results. They are a cornerstone of functional programming in OCaml.
+or return them as results. They are a cornerstone of functional programming in \ocaml.
 They allow 
-for concise and expressive code, enabling powerful abstractions and code reuse. Here is an example of a higher-order function in OCaml:
+for concise and expressive code, enabling powerful abstractions and code reuse. 
+Here is an example of a higher-order function in OCaml:
 
 \begin{minted}{ocaml}
     let apply_twice f x = f (f x)
 \end{minted}
 
-In this example, \texttt{apply\_twice} is a higher-order function that takes a function \texttt{f} and an argument \texttt{x}, and applies \texttt{f} to \texttt{x} twice.
+In this example, \texttt{apply\_twice} is a higher-order function that takes a function 
+\texttt{f} and an argument \texttt{x}, and applies \texttt{f} to \texttt{x} twice.
 
 \section{GOSPEL \& Cameleer}
 \label{sec:gospel_and_cameleer}
+
+\gospel is a specification language built with the goal of providing \ocaml code 
+with formal contracts, such as preconditions, postconditions, invariants and other 
+specifications. These contracts can be used to specify the intended behavior of 
+specific parts of the code, helping to ensure correctness and reliability.
+
+\cameleer is a tool that translates the beforementioned contracts into WhyML - 
+the specification language of \why, a platform that we will talk about in 
+section \ref{sec:why3}.
+
+These tools are strongly coupled to provide a more reliable way of verifying 
+\ocaml programs.
 
 \subsection{Example}
 \label{sub:example}
