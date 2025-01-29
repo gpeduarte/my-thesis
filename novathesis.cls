@@ -903,12 +903,6 @@
 % \renewcommand{\gls@automake@makegloss}{makeglossaries -q}%
 \renewcommand{\GlsXtrFormatLocationList}[1]{\emph{\small#1)}}
 \renewcommand{\glsnamefont}[1]{\textbf{#1}}%
-\newcommand*{\glsplainhyperlink}[2]{%
-    \begingroup%
-      \hypersetup{hidelinks}%
-      \hyperlink{#1}{#2}%
-    \endgroup%
-}%
 
 %--------------------------------
 % “Process gnumberlist” option - after glossaries

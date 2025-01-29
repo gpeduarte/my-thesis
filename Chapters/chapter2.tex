@@ -98,8 +98,29 @@ These tools are strongly coupled to provide a more reliable way of verifying
 \section{Why3}
 \label{sec:why3}
 
+\ocaml in itself is a powerful language, but it lacks the tools to provide clear 
+and concise specifications for the code. \why is a platform that provides a framework 
+for deductive program verification. It allows for the specification of programs, 
+described previously in section~\ref{sec:gospel_and_cameleer}, to be verified using 
+logical verification conditions. It works with SMT solvers, such as \zthree, \altergo, 
+and \coq.
+
 \section{RAC}
 \label{sec:rac}
+
+There are several approaches to formal verification, such as static verification, 
+which is based on the analysis of static code, such as type checking, and dynamic 
+verification, which is based on the execution of the code, with the use of 
+techniques resorting to assertions and logical contracts. Runtime Assertion Checking 
+(\rac) is a dynamic verification technique that consists of inserting assertions 
+into the code to check for correctness during runtime.
+
+These assertions can be used to verify preconditions, postconditions, and invariants, 
+providing a way to ensure the correctness of the code during execution. For this to 
+happen, the programmer (or tester), need to insert assertions to define the intended 
+behaviour of functions or modules. At runtime, these assertions are checked, and if 
+any of them fail, an error is raised, indicating that the code is not behaving as 
+expected.
 
 \subsection{Technique}
 \label{sub:technique}
@@ -109,3 +130,9 @@ These tools are strongly coupled to provide a more reliable way of verifying
 
 \section{ORTAC}
 \label{sec:ortac}
+
+\ortac is a tool for \rac in \ocaml programs. It provides a way to verify, at runtime, 
+assertions previously declared to check if they are satisfied. If these contracts, 
+defined using \why, are not met, the execution of \ortac is interrupted, and an error 
+is raised, allowing the programmer or tester to evaluate the portion of code that is 
+failing its logical assertion.
