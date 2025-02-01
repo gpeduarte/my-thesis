@@ -1,0 +1,120 @@
+
+\RequirePackage{listings}
+\RequirePackage{xcolor}
+\RequirePackage{bold-extra}
+
+\definecolor{thegraygray}{rgb}{0.5,0.5,0.5}
+\definecolor{crimson}{RGB}{215, 38, 56}
+\definecolor{steelblue}{RGB}{63, 136, 197}
+\definecolor{carrot}{RGB}{244, 157, 55}
+\definecolor{spec}{RGB}{204,102,0}
+\definecolor{dark-green}{RGB}{0,102,0}
+\definecolor{newtype}{RGB}{255, 30, 30}
+
+\lstdefinelanguage{gospel}
+{
+mathescape=false,
+aboveskip=1pt,%
+basicstyle=\ttfamily,%
+keywords={let,try,type,module,end,in,functor,struct,to,open,include,
+mutable,sig,val,while,for,private,begin,rec,if,then,else,match,with,fun,resume,effect, by, old, exception, Fixpoint, as},%
+keywords=[2]{predicate,constant,consumes,function,goal,use,%
+import,theory,syntax,scope,%
+invariant,model,requires,ensures,returns,reads,writes,diverges,%
+variant,loop,abstract,any,assume,check,%
+clone,ghost,do,done,absurd,raises, %
+Lemma, SPEC, PRE, POSTUNIT, POST, Definition, Prop, INV,
+axiom,lemma,export,forall,exists,and,inductive,coinductive, performs,%
+ephemeral,modifies,try\_ensures,post,pre,(*@,*),\[@logic\]},%
+keywords=[3]{bool, int, ref, float, list, unit, array, Array, List, tree, Some, None, hprop, Hashtbl},
+keywords=[4]{true, false, raise, perform, continue},
+keywords=[5]{typeclass, implements},
+keywordstyle={\color{crimson}},%
+keywordstyle=[2]{\color{carrot}},%
+keywordstyle=[3]{\color{steelblue}},
+keywordstyle=[4]{\color{blue}},
+keywordstyle=[5]{\color{crimson}},
+%keywordstyle=\bfseries,%
+moredelim=[s][\itshape\color{thegraygray}]{(*\ }{*)},
+moredelim=[s][\itshape\color{thegraygray}]{\[v}{\]},
+moredelim=[s][\color{carrot}]{\[@}{\]},
+moredelim=[s][\color{steelblue}]{"}{"},
+commentstyle=\itshape\color{thegraygray},%
+columns=[l]fullflexible,%
+sensitive=true,%
+escapeinside={*?}{?*},%
+keepspaces=true,% for nicer ->
+literate={'a}{$\alpha$}{1}%
+ {'b}{$\beta$}{1}%
+ {<}{$<$}{1}%
+ {>}{$>$}{1}%
+ {<=}{$\le$}{1}%
+ {>=}{$\ge$}{1}%
+ {<>}{$\ne$}{1}%
+ {_union}{$\mathit{\cup}$}{1}%
+ {=>}{$\implies$}{1}%
+ {<=>}{$\iff$}{1}%
+ {/\\}{$\land$}{1}%
+ {\\/}{ $\lor$ }{3}%
+ {\ or(}{ $\lor$(}{3}%
+ %{not\ }{$\lnot$ }{2}%
+ {not_}{$\lnot$}{2}%
+ {+->}{\texttt{+->}}{3}%
+ {+->}{$\mapsto$}{2}%
+ {-->}{\texttt{-\relax->}}{3}%
+ {-->}{$\longrightarrow$}{2}%
+ {->}{$\rightarrow$}{2}%
+ {forall}{$\forall$}{2}%
+ {exists_}{$\exists$}{2}%
+ {<-}{$\leftarrow$}{2}%
+ {<->}{$\leftrightarrow$}{2}%
+}
+
+\newcounter{lst}
+
+\lstnewenvironment{syntax}[1][none]{
+  \lstset{language=gospel,numbers=#1,caption={Syntax\vspace*{-2em}},aboveskip=-1em,
+    basicstyle=\ttfamily\footnotesize
+}
+ } {\addtocounter{lst}{1}}
+
+\lstnewenvironment{ocamlenv}[1][none]{
+  \lstset{language=gospel,numbers=#1,caption={\ocaml\vspace*{-2em}},aboveskip=-1em}
+ } {\addtocounter{lst}{1}}
+
+ \lstnewenvironment{ocamlsmall}[1][none]{
+   \lstset{language=gospel,numbers=#1,caption={\ocaml\vspace*{-2em}},aboveskip=-1em, basicstyle=\ttfamily\footnotesize
+   }
+ } {\addtocounter{lst}{1}}
+
+\lstnewenvironment{gospel}[1][none]{
+  \lstset{language=gospel,numbers=#1,caption={\gospellang + \ocaml \vspace*{-2em}},aboveskip=-1em}
+ } {\addtocounter{lst}{1}}
+
+\lstnewenvironment{cfml}[1][none]{
+  \lstset{language=gospel,numbers=#1,caption={CFML\vspace*{-2em}},aboveskip=-1em, basicstyle=\ttfamily\footnotesize
+  }
+ } {\addtocounter{lst}{1}}
+
+\lstnewenvironment{whylang}[1][none]{
+  \lstset{language=gospel,numbers=#1,caption={\whyml \vspace*{-2em}},aboveskip=-1em, basicstyle=\ttfamily\footnotesize}
+ } {\addtocounter{lst}{1}}
+
+\lstnewenvironment{gospelsmall}[1][none]{
+  \lstset{language=gospel,numbers=#1,caption={\gospellang + \ocaml \vspace*{-2em}},aboveskip=-1em, basicstyle=\ttfamily\footnotesize}
+ } {\addtocounter{lst}{1}}
+
+\lstnewenvironment{term}[1][none]{
+  \lstset{language=gospel,numbers=#1,caption={Shell \vspace*{-2em}},aboveskip=-1em, basicstyle=\ttfamily\footnotesize}
+ } {\addtocounter{lst}{1}}
+
+ \lstnewenvironment{whylangannex}[1][none]{
+  \lstset{language=gospel, xleftmargin=-5em,numbers=#1,caption={\whyml \vspace*{-2em}},aboveskip=-1em, basicstyle=\ttfamily\footnotesize}
+ } {\addtocounter{lst}{1}}
+
+
+
+
+\def\gosp{\lstinline[language=gospel, basicstyle=\ttfamily]} %normalsize
+\def\gosprm{\lstinline[language=gospel, basicstyle=\normalsize]}
+\let\of\gosp

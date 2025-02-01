@@ -53,10 +53,12 @@ to verify \ocaml programs extensively, to the point whether the system is fully 
 This goal may arise questions such as:
 
 \begin{quote}
-    \emph{What are the advantages of combining static and dynamic verification techniques to verify \ocaml programs?}
+    \emph{Is it possible to combine static and dynamic verification for \ocaml programs?}
 \end{quote}
 
 *insert more questions here*
+
+\todo[inline]{See with professor what other questions may arise and how to present them}
 
 \begin{itemize}
     \item State the usefulness of the thesis theme to solving real world problems
@@ -66,13 +68,40 @@ This goal may arise questions such as:
 \subsection{RAC}
 \label{sub:rac}
 
-\begin{itemize}
-    \item Present \rac
-\end{itemize}
+Runtime Assertion Checking (\rac) is a dynamic verification technique that consists of 
+inserting assertions - logical expressions that must be true at a certain point in the 
+execution - into the code to check for correctness during runtime. If these assertions fail, 
+an error is raised, indicating that the code is not behaving as expected.
 
-\begin{itemize}
-    \item Monitores
-\end{itemize}
+This is a powerful technique that can be used to verify preconditions, postconditions, and 
+invariants, proving to be of utmost importance in the verification of programs, especially 
+in the context of the \ocaml language, where the type system, although powerful, may not be 
+enough to ensure the correctness of the code.
+
+\rac is used during runtime, which by itself means that there needs to be a precondition required 
+by the programmer: the code must be executable. In other words, \rac cannot be used if the code 
+has errors that prevent it from being executed.
+
+This technique is better suited for verifying dynamic structures and algorithms, as these are 
+mutable and may change during execution. This is a limitation of static verification, which 
+is unable to verify mutable pieces of code.
+
+Although very powerful, \rac is not enough to ensure the correctness of the code. One of its 
+limitations is errors that can arise from the code that is static. For example, it may be unable 
+to type-check code, check declarations or definitions, or verifying that the code is not going to 
+compile.
+
+This is where static verification comes in. It is a technique that can be used to verify the 
+correctness of the code before it is executed. This is done by analyzing the code without 
+executing it, using techniques such as type checking, abstract interpretation, and model checking.
+This technique can detect potential errors during compilation, thus ensuring that the code is 
+able to run. Both dynamic and static verification can be combined to provide a more exhaustive 
+and complete verification of the code.
+
+One example of cooperation between the two techniques is \texttt{Monitors} - a technique that, 
+in first instance, uses static verification to verify some code, and then uses dynamic verification 
+to verify the parts of the code that previously were not verified. This process is repeated until 
+the code is fully verified.
 
 \section{Expected Contributions}
 \label{sec:expected_Contributions}
@@ -95,7 +124,7 @@ This goal may arise questions such as:
     \item Chapter \ref{cha:preliminary_results} will focus on presenting preliminary 
         results of some exercises that were performed. These exercises consist of verifying 
         the effectiveness of verification in a \texttt{Queue} implementation in \ocaml. 
-        Resorting to \gospel, \cameleer and \ortac, this is an essential chapter to understand 
+        Resorting to \gospellang, \cameleer and \ortac, this is an essential chapter to understand 
         what can be done to combine both static and dynamic verification.
     \item Chapter \ref{cha:work_plan} will present the scheduled plan of work ahead and explain 
     birefly how we will manage it.

@@ -23,9 +23,10 @@
 \usepackage{cleveref}
 \usepackage{hyperref}
 \usepackage{xspace}
+\usepackage{listings}
 
 \newcommand{\ocaml}{OCaml\xspace}
-\newcommand{\gospel}{\gls{gospel}\xspace}
+\newcommand{\gospellang}{\gls{gospel}\xspace}
 \newcommand{\ortac}{\gls{ortac}\xspace}
 \newcommand{\cameleer}{\gls{cameleer}\xspace}
 \newcommand{\why}{\gls{why3}\xspace}
@@ -42,7 +43,27 @@
 \usepackage{makecell}      % Multiline table cells and control vertical and horizontal alignment
 
 \usepackage{tcolorbox}    % pretty print color boxes
-
-\usepackage{minted}    % Fontification of source code listings
-%   \usemintedstyle{colorful}       
+     
 \usepackage{xcolor}
+
+\usepackage{gospel}
+\usepackage{rust}
+\usepackage{caption}
+\DeclareCaptionFormat{listing}{\hfill#3}
+\captionsetup[lstlisting]{format=listing,singlelinecheck=false, margin=0pt,
+  font={sf,it},labelsep=space,labelfont=bf,belowskip=-1pt}
+
+\definecolor{codemarkcolor}{RGB}{178, 190, 181} % Define the color (you can adjust the RGB values)
+\newcommand{\codemark}[1]{%
+  \hspace{6pt}% Adjust the spacing here
+  \tikz[overlay,remember picture,baseline=(marker.base)]\node[draw,circle,inner sep=0.7pt,yscale=0.8,xscale=0.8,fill=codemarkcolor] (marker) {\textbf{#1}};
+  \hspace{4pt}% Adjust the spacing here
+}
+
+\newtcbox{\highlight}{enhanced,nobeforeafter,tcbox raise base,boxrule=0.4pt,top=0mm,bottom=0mm,
+  right=0mm,left=0mm,arc=1pt,boxsep=2pt,before upper={\vphantom{dlg}},
+  colframe=green!50!black,coltext=green!25!black,colback=green!10!white}
+
+\newtcbox{\redhighlight}{enhanced,nobeforeafter,tcbox raise base,boxrule=0.4pt,top=0mm,bottom=0mm,
+  right=0mm,left=0mm,arc=1pt,boxsep=2pt,before upper={\vphantom{dlg}},
+  colframe=red!50!black,coltext=red!25!black,colback=red!10!white}

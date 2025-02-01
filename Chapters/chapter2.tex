@@ -32,13 +32,52 @@ paradigms, making it a versatile choice for various types of software developmen
 \ocaml's type inference system helps catch errors at compile time, reducing the 
 likelihood of runtime errors and improving code reliability.
 
+These aspects of this functional language make it a useful and resourceful tool 
+for developing software that requires high standards of verification and thus, correctness.
+It is language becoming more widely used for a plethora of applications.
+
 \subsection{Language Overview} % (fold)
 \label{sub:language_overview}
 
 Being a functional language, \ocaml encourages the use of higher-order functions, 
 which can accomodate for more generic solutions for a variety of problems. However,
 \ocaml's expressive type system and powerful abstractions can lead to more robust
-and maintainable code, especially in large and complex systems.
+and maintainable code, especially in large and complex systems. The language's 
+modules allow for encapsulation and organization, making code readability and organization 
+easier to achieve.
+
+As an example, consider the following code snippet, which defines a simple stack
+
+\begin{ocamlenv}
+    type 'a stack = 'a list
+
+    let empty = []
+
+    let push x s = x :: s
+
+    let pop = function
+        | [] -> failwith "Empty stack"
+        | _ :: s -> s
+
+    let top = function
+        | [] -> failwith "Empty stack"
+        | x :: _ -> x
+\end{ocamlenv}
+
+This code defines a stack data structure and its basic operations. It then can be used 
+in a reusable manner throughout the codebase. As an example:
+
+\begin{ocamlenv}
+    let s = push 1 (push 2 empty)
+    let t = pop s
+    let u = top t
+\end{ocamlenv}
+
+\todo[inline]{This code is then exemplified in the following section, should it be here?}
+
+For programmers, it is a familiar and easy-to-understand way of defining and using 
+data structures and algorithms, as they can be previously declared and used throughout 
+the code.
 
 \subsection{Modules and Functors} % (fold)
 \label{sub:modules_and_functors}
@@ -51,7 +90,7 @@ A module is a collection of definitions, such as types, functions, and values,
 grouped under a single name. Modules provide namespaces to prevent naming conflicts 
 and enable better code organization.
 
-\begin{minted}{ocaml}
+\begin{ocamlenv}
     module type Stack = sig
         type 'a t
         val empty : 'a t
@@ -59,7 +98,7 @@ and enable better code organization.
         val pop : 'a t -> 'a t
         val top : 'a t -> 'a
     end
-\end{minted}
+\end{ocamlenv}
 
 \subsection{Higher Order Functions}
 \label{sub:higher_order_functions}
@@ -70,9 +109,9 @@ They allow
 for concise and expressive code, enabling powerful abstractions and code reuse. 
 Here is an example of a higher-order function in OCaml:
 
-\begin{minted}{ocaml}
+\begin{ocamlenv}
     let apply_twice f x = f (f x)
-\end{minted}
+\end{ocamlenv}
 
 In this example, \texttt{apply\_twice} is a higher-order function that takes a function 
 \texttt{f} and an argument \texttt{x}, and applies \texttt{f} to \texttt{x} twice.
@@ -80,7 +119,7 @@ In this example, \texttt{apply\_twice} is a higher-order function that takes a f
 \section{GOSPEL \& Cameleer}
 \label{sec:gospel_and_cameleer}
 
-\gospel is a specification language built with the goal of providing \ocaml code 
+\gospellang is a specification language built with the goal of providing \ocaml code 
 with formal contracts, such as preconditions, postconditions, invariants and other 
 specifications. These contracts can be used to specify the intended behavior of 
 specific parts of the code, helping to ensure correctness and reliability.
@@ -95,6 +134,8 @@ These tools are strongly coupled to provide a more reliable way of verifying
 \subsection{Example}
 \label{sub:example}
 
+\todo[inline]{Add an example of a contract in GOSPEL and its translation to WhyML}
+
 \section{Why3}
 \label{sec:why3}
 
@@ -108,6 +149,7 @@ and \coq.
 \section{RAC}
 \label{sec:rac}
 
+\todo[inline]{Separation of this section into below subsections subsections}
 There are several approaches to formal verification, such as static verification, 
 which is based on the analysis of static code, such as type checking, and dynamic 
 verification, which is based on the execution of the code, with the use of 
@@ -128,11 +170,12 @@ expected.
 \subsection{Relation with Static Verification}
 \label{sub:relation_with_static_verification}
 
-\section{ORTAC}
-\label{sec:ortac}
+\subsection{ORTAC}
+\label{sub:ortac}
 
 \ortac is a tool for \rac in \ocaml programs. It provides a way to verify, at runtime, 
 assertions previously declared to check if they are satisfied. If these contracts, 
 defined using \why, are not met, the execution of \ortac is interrupted, and an error 
 is raised, allowing the programmer or tester to evaluate the portion of code that is 
 failing its logical assertion.
+\todo[inline]{Add information about how ORTAC works}
