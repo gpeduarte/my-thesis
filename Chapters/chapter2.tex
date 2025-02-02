@@ -11,7 +11,7 @@
 \chapter{Background}
 \label{cha:background}
 
-\textbf{NOTA:} Sections 3.3 \& 3.5; 1 \& 2 of \cite{Brain2025}.
+\textbf{NOTA:} Sections 3.3 \& 3.5; 1 \& 2 of \cite{Brian_Polgreen2025}.
 
 \section{Formal Verification}
 \label{sec:formal_verification}
@@ -21,7 +21,14 @@ prove the correctness of a software system. Its goal is to ensure that a system
 is compliant with a given set of specifications, leaving no room for ambiguities or 
 unforeseen errors. Unlike traditional testing, which can only cover a 
 finite set of scenarios, formal verification provides a guarantee of 
-correctness for all possible inputs and states within the specified domain~\cite{Brain2025}.
+correctness for all possible inputs and states within the specified domain~\cite{Brian_Polgreen2025}.
+
+The use of this process requires a certain level of expertise in formal methods, such as 
+logical reasoning, model checking, and theorem proving. It is a complex and time-consuming 
+process, but the results are proven to be worth the effort, so much so that Formal Verification 
+is used in critical systems, such as avionics~\cite{Yin_Yongfeng2010}, automotive~\cite{Rajabli_Nijat2021}, 
+and medical devices~\cite{Bezerra_Jonas_Santos2016}. It also helps reduce workload and costs 
+of software maintenance, as it can detect and prevent errors early in the development process.
 
 \section{OCaml}
 \label{sec:ocaml}
@@ -35,6 +42,10 @@ likelihood of runtime errors and improving code reliability.
 These aspects of this functional language make it a useful and resourceful tool 
 for developing software that requires high standards of verification and thus, correctness.
 It is language becoming more widely used for a plethora of applications.
+
+Some of the key features of \ocaml are: its expressive type system; the pattern matching cases; 
+the higher-order functions; and the module system. All these features make \ocaml an expressive 
+and concise language, which can be used to develop both simple and complex systems.
 
 \subsection{Language Overview} % (fold)
 \label{sub:language_overview}
@@ -115,6 +126,19 @@ Here is an example of a higher-order function in OCaml:
 
 In this example, \texttt{apply\_twice} is a higher-order function that takes a function 
 \texttt{f} and an argument \texttt{x}, and applies \texttt{f} to \texttt{x} twice.
+
+We can also take as an example the code in the previous section, adding the \texttt{filter} 
+function, taking a function as an argument:
+
+\begin{ocamlenv}
+    module type Stack = sig
+        ...
+        val filter : ('a -> bool) -> 'a list -> 'a list
+\end{ocamlenv}
+
+Here, the \texttt{filter} function takes a predicate function and a list, and returns 
+the elements of the list that satisfy the predicate. This is an example of an Higher Order 
+Function, as it takes a function as an argument.
 
 \section{GOSPEL \& Cameleer}
 \label{sec:gospel_and_cameleer}
