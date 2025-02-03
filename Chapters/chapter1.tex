@@ -40,7 +40,7 @@ The two can  be combined to provide a more exhaustive verification of \ocaml pro
 collaborating for a more structured and correct code. This can even be more useful in the context of 
 systems that have a direct impact in everyday life.
 
-For example, \textit{monitors} follow a set of steps to ensure that the system is correctly implemented. 
+For example, \monitors follow a set of steps to ensure that the system is correctly implemented. 
 First, static verification is performed to ensure that the code may not have any errors during compilation.
 Then, for the parts of the code that the previous step could not verify, dynamic verification is performed 
 to verify the code's behavior during execution. This process is repeated until the system is fully verified.
@@ -65,6 +65,20 @@ This goal may arise questions such as:
     \item Present questions that may arise
 \end{itemize}
 
+\subsection{Static Verification}
+\label{sub:static_verification}
+
+Source code - or bytecode - can be verified without the machine running it. This process allows to programmer 
+to find error in type-checking, abstract interpretation, model checking, theorem proving and symbolic execution.
+This is a form of static verification - verifying the correctness of code without the need to run it.
+For programmers and testers, it is helpful to verify if the code being written/analysed is correct without 
+wasting resources (time, CPU, RAM) by running the program, and static verification techniques provide just the solution.
+
+Static verification can enhance early error detection during the development process, when the code is still 
+being written, aided by the exhaustive analysis of the code, that covers all logical paths and scenarios for 
+a given domain. It is a resource-efficient approach that gives the garantee of correctness of critical 
+pieces of code. This leads to an overall efficiency in verifying code.
+
 \subsection{RAC}
 \label{sub:rac}
 
@@ -75,16 +89,14 @@ an error is raised, indicating that the code is not behaving as expected.
 
 This is a powerful technique that can be used to verify preconditions, postconditions, and 
 invariants, proving to be of utmost importance in the verification of programs, especially 
-in the context of the \ocaml language, where the type system, although powerful, may not be 
-enough to ensure the correctness of the code.
+in the context of the \ocaml language~\cite{Filliatre_Jean-Christophe}, where the type system, 
+although powerful, may not be enough to ensure the correctness of the code.
 
 \rac is used during runtime, which by itself means that there needs to be a precondition required 
 by the programmer: the code must be executable. In other words, \rac cannot be used if the code 
-has errors that prevent it from being executed.
-
-This technique is better suited for verifying dynamic structures and algorithms, as these are 
-mutable and may change during execution. This is a limitation of static verification, which 
-is unable to verify mutable pieces of code.
+has errors that prevent it from being executed. This technique is better suited for verifying dynamic 
+structures and algorithms, as these are mutable and may change during execution. This is a limitation 
+of static verification, which is unable to verify mutable pieces of code.
 
 Although very powerful, \rac is not enough to ensure the correctness of the code. One of its 
 limitations is errors that can arise from the code that is static. For example, it may be unable 
@@ -92,15 +104,15 @@ to type-check code, check declarations or definitions, or verifying that the cod
 compile.
 
 This is where static verification comes in. It is a technique that can be used to verify the 
-correctness of the code before it is executed. This is done by analyzing the code without 
+correctness of the code before it is executed. As explained in \ref{sub:static_verification}, this is done by analyzing the code without 
 executing it, using techniques such as type checking, abstract interpretation, and model checking.
 This technique can detect potential errors during compilation, thus ensuring that the code is 
 able to run. Both dynamic and static verification can be combined to provide a more exhaustive 
 and complete verification of the code.
 
-One example of cooperation between the two techniques is \texttt{Monitors} - a technique that, 
+One example of cooperation between the two techniques is \monitors - a technique that, 
 in first instance, uses static verification to verify some code, and then uses dynamic verification 
-to verify the parts of the code that previously were not verified. This process is repeated until 
+to verify the parts of the code that previously were unable to be verified. This process is repeated until 
 the code is fully verified.
 
 \section{Expected Contributions}

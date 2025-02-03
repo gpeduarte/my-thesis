@@ -20,11 +20,23 @@
 
 \todo[inline]{What to write in this section?}
 
-\begin{itemize}
-  \item \textit{A Pyramid Of (Formal) Software
-  Verification}~\cite{Brian_Polgreen2025}
-  \item \textit{Static and Dynamic Verification of OCaml
-  Programs: The Gospel Ecosystem}~\cite{Soares_Chirica_Pereira2024}
-  \item \textit{Ortac: Runtime Assertion Checking for OCaml (tool
-  paper)}~\cite{Filliatre_Jean-Christophe}
-\end{itemize}
+\section{Combine Static and Dynamic Verification}
+\label{sec:combine_static_and_dynamic_verification}
+
+This work that we propose in similar to that of Soares, Chirica and Pereira's~\cite{Soares_Chirica_Pereira2024}. 
+  This work circle around \gospellang, one of the tools used in 
+dynamic verification, and its relation to its static counterparts. What we propose to do with this work 
+diverges from this, as we focus in combining the two in a unique technique, called \monitors, that 
+verifies the program initially with static verification, and then, when that process concludes, resorts to 
+dynamic verification (more specifically \rac~\cite{Filliatre_Jean-Christophe}). It resorts not only to 
+\gospellang, but also \ortac, \why and \cameleer, as well as static verification, thus being more robust and 
+complete.
+
+This cannot be done without including Formal Verification, as demonstrated by Brian and Polgreen's 
+work~\cite{Brian_Polgreen2025}. It is one of the pillars of software verification, as it permits the search for correctness 
+to be as precise, robust and complete as it can be.
+
+Currently, the combination of these two techniques is either theoretical or it exists losely coupled together. 
+What we propose is directed to a single and efficient way of fully verifying an \ocaml program resorting to 
+tools that focus in either static or dynamic strands of software verification. Both can be used in a way that 
+one strengthens the disadvantages of the other, and vice-versa.
