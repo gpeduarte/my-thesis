@@ -69,10 +69,6 @@ As an example, consider the following code snippet, which defines a simple stack
     let pop = function
         | [] -> failwith "Empty stack"
         | _ :: s -> s
-
-    let top = function
-        | [] -> failwith "Empty stack"
-        | x :: _ -> x
 \end{ocamlenv}
 
 This code defines a stack data structure and its basic operations. It then can be used 
@@ -81,7 +77,6 @@ in a reusable manner throughout the codebase. As an example:
 \begin{ocamlenv}
     let s = push 1 (push 2 empty)
     let t = pop s
-    let u = top t
 \end{ocamlenv}
 
 \todo[inline]{This code is then exemplified in the following section, should it be here?}
@@ -107,7 +102,6 @@ and enable better code organization.
         val empty : 'a t
         val push : 'a -> 'a t -> 'a t
         val pop : 'a t -> 'a t
-        val top : 'a t -> 'a
     end
 \end{ocamlenv}
 
@@ -146,7 +140,7 @@ Function, as it takes a function as an argument.
 \gospellang is a specification language built with the goal of providing \ocaml code 
 with formal contracts, such as preconditions, postconditions, invariants and other 
 specifications. These contracts can be used to specify the intended behavior of 
-specific parts of the code, helping to ensure correctness and reliability.
+specific parts of the code~\cite{Soares_Chirica_Pereira2024}, helping to ensure correctness and reliability.
 
 \cameleer is a tool that translates the beforementioned contracts into WhyML - 
 the specification language of \why, a platform that we will talk about in 
@@ -198,7 +192,7 @@ expected.
 \label{sub:ortac}
 
 \ortac is a tool for \rac in \ocaml programs. It provides a way to verify, at runtime, 
-assertions previously declared to check if they are satisfied. If these contracts, 
+assertions previously declared to check if they are satisfied~\cite{Filliatre_Jean-Christophe}. If these contracts, 
 defined using \why, are not met, the execution of \ortac is interrupted, and an error 
 is raised, allowing the programmer or tester to evaluate the portion of code that is 
 failing its logical assertion.
