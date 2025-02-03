@@ -1,3 +1,24 @@
+@inbook{Pereira_Ravara2021,
+   abstract = {We present Cameleer, an automated deductive verification tool for OCaml. We leverage on the recently proposed GOSPEL (Generic OCaml SPEcification Language) to attach rigorous, yet readable, behavioral specification to OCaml code. The formally-specified program is fed to our toolchain, which translates it into an equivalent one in WhyML, the programming and specification language of the Why3 verification framework. We report on successful case studies conducted in Cameleer.},
+   author = {Mário Pereira and António Ravara},
+   doi = {10.1007/978-3-030-81688-9_31},
+   editor = {Alexandra Silva and K. Rustan M. Leino},
+   isbn = {978-3-030-81688-9},
+   journal = {Computer Aided Verification},
+   month = {7},
+   pages = {677-689},
+   publisher = {Springer International Publishing},
+   title = {Cameleer: A Deductive Verification Tool for OCaml},
+   volume = {12760},
+   year = {2021},
+}
+@misc{,
+   doi = {10.54499/UIDB/04516/2020},
+   month = {1},
+   title = {NOVA Laboratory for Computer Science and Informatics},
+   url = {https://sciproj.ptcris.pt/157572UID},
+   year = {2020},
+}
 @misc{Pereira2024,
    abstract = {In this paper, we provide a comprehensive, hands-on tutorial on how to apply deductive verification to programs written in OCaml. In particular, we show how one can use the GOSPEL specification language and the Cameleer tool to conduct mostly-automated verification on OCaml code. In our presentation, we focus on two main classes of programs: first, purely functional programs with no mutable state; then on imperative programs, where one can mix mutable state with subtle control-flow primitives, such as locally-defined exceptions.},
    author = {Mário Pereira},
@@ -77,6 +98,8 @@
    volume = {5},
    year = {2010},
 }
+@undefined{,
+}
 @article{Soares_Chirica_Pereira2024,
    abstract = {We present our work on the collaborative use of dynamic and static analysis tools for the verification of software written in the OCaml language. We build upon Gospel, a specification language for OCaml that can be used both in dynamic and static analyses. We employ Ortac, for runtime assertion checking, and Cameleer and CFML for the deductive verification of OCaml code. We report on the use of such tools to build a case study of collaborative analysis of a non-trivial OCaml program. This shows how these tools nicely complement each others, while at the same highlights the differences when writing specification targeting dynamic or static analysis methods.},
    author = {Tiago Lopes Soares and Ion Chirica and Mário Pereira},
@@ -85,7 +108,7 @@
    url = {http://arxiv.org/abs/2407.17289},
    year = {2024},
 }
-@misc{Filliatre_Jean-Christophe,
+@misc{Filliatre,
    abstract = {Runtime assertion checking (RAC) is a convenient set of techniques that lets developers abstract away the process of verifying the correctness of their programs by writing formal specifications and automating their verification at runtime. In this work, we present ortac, a runtime assertion checking tool for OCaml libraries and programs. OCaml is a functional programming language in which idioms rely on an expressive type system, modules, and interface abstractions. ortac consumes interfaces annotated with type invariants and function contracts and produces code wrappers with the same signature that check these specifications at runtime. It provides a flexible framework for traditional assertion checking, monitoring mis-behaviors without interruptions, and automated fuzz testing for OCaml programs. This paper presents an overview of ortac features and highlights its main design choices.},
    author = {Jean-Christophe Filliâtre and Clément Pascutto},
    keywords = {Assertion,Caml·,Checking· O,Engineer-ing,Runtime,Software},

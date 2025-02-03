@@ -24,7 +24,7 @@ correctness for all possible inputs and states within the specified domain~\cite
 The use of this process requires a certain level of expertise in formal methods, such as 
 logical reasoning, model checking, and theorem proving. It is a complex and time-consuming 
 process, but the results are proven to be worth the effort, so much so that Formal Verification 
-is used in critical systems, such as avionics~\cite{Yin_Yongfeng2010}, automotive~\cite{Rajabli_Nijat2021}, 
+is used in critical systems, such as avionics~\cite{Yin_Yongfeng2010}, automotive~\cite{Rajabli2021}, 
 and medical devices~\cite{Bezerra_Jonas_Santos2016}. It also helps reduce workload and costs 
 of software maintenance, as it can detect and prevent errors early in the development process.
 
@@ -60,13 +60,14 @@ As an example, consider the following code snippet, which defines a simple stack
 \begin{ocamlenv}
     type 'a stack = 'a list
 
-    let empty = []
+    let empty : 'a stack = []
 
     let push x s = x :: s
 
-    let pop = function
+    let pop a =
+        match a with
         | [] -> failwith "Empty stack"
-        | _ :: s -> s
+        | x :: s -> x
 \end{ocamlenv}
 
 This code defines a stack data structure and its basic operations. It then can be used 
@@ -97,9 +98,9 @@ and enable better code organization.
 \begin{ocamlenv}
     module type Stack = sig
         type 'a t
-        val empty : 'a t
-        val push : 'a -> 'a t -> 'a t
-        val pop : 'a t -> 'a t
+        val create : unit -> 'a t
+        val push : 'a -> 'a t -> unit
+        val pop : 'a t -> 'a
     end
 \end{ocamlenv}
 
@@ -140,7 +141,7 @@ with formal contracts, such as preconditions, postconditions, invariants and oth
 specifications. These contracts can be used to specify the intended behavior of 
 specific parts of the code~\cite{Soares_Chirica_Pereira2024}, helping to ensure correctness and reliability.
 
-\cameleer is a tool that translates the beforementioned contracts into WhyML - 
+\cameleer is a tool that translates the beforementioned contracts into WhyML~\cite{Pereira_Ravara2021} - 
 the specification language of \why, a platform that we will talk about in 
 section \ref{sec:why3}.
 
@@ -162,7 +163,7 @@ described previously in section~\ref{sec:gospel_and_cameleer}, to be verified us
 logical verification conditions. It works with SMT solvers, such as \zthree, \altergo, 
 and \coq.
 
-\section{RAC}
+\section{Runtime Assertion Checking}
 \label{sec:rac}
 
 \todo[inline]{Separation of this section into below subsections subsections}
@@ -183,15 +184,75 @@ expected.
 \subsection{Technique}
 \label{sub:technique}
 
+As explained before, \rac is a technique that consists of inserting assertions into 
+parts of the code that are the target of verification, and then executing the program 
+focusing in those same parts. Therefore, the technique consists of two parts:
+
+\begin{itemize}
+    \item Defining assertions with the intended behaviour of the code;
+    \item Executing the code and verifying if the aforementioned assertions are met.
+\end{itemize}
+
+\subsubsection{Assertions}
+\label{subsub:assertions}
+
+Assertions are logical expressions that define the intended behaviour of the 
+function or module they are inserted in. They consist of preconditions (\texttt{requires}), 
+postconditions (\texttt{ensures}), and invariants (\texttt{invariant}).
+
+The first are conditions that must be met before the execution enters 
+the portion of code that is being verified. A use of this is to check if the input 
+parameters are within the expected range, or if the data structures are in a valid 
+state. Validating the input can prevent the code from ending abrutly, raising an error.
+
+The second represent the expected results of the execution of the code, i.e. the expected 
+outcome of the function or module. This can be used to check if the output is correct and 
+if the data structures and modules accessed remained valid and/or in a predefined state. 
+
+Lastly, invariants delimit the state of the variables and data structures that are 
+being used in that portion of code. Here, the programmer can define the limits of 
+the data structures, the expected values of the variables, and other conditions that 
+must remain true. Invariants are used when \texttt{loops} (such as \texttt{for} and 
+\texttt{while}) are present.
+
+\subsubsection{Execution}
+\label{subsub:execution}
+
+When the code is executed, tools focus in verifying that the products of 
+the execution are in accordance with the assertions, and if they are not, an error is 
+raised, alerting the programmer or tester that the code is not behaving as expected. 
+The errors raised can also be used to debug code if they provide information about the 
+difference between the expected and the actual results.
+
 \subsection{Relation with Static Verification}
 \label{sub:relation_with_static_verification}
+
+Dynamic verification has the goal of verifying code, checking for problems and errors 
+that may be present. Almost as a form of testing. Static verification in not much different, 
+as the goal is precisely the same. However, the approach is different. While dynamic ficuses 
+on execution, static verification focuses on the code itself, analyzing it to find possible 
+errors. 
+
+Both techniques are complementary, with ones strengths being the others weaknesses.
+Dynamic verification cannot run if code compilation fails - this can be enabled by static 
+verification as it can catch errors like type mismatches and syntax errors. On the other hand, 
+static verification on mutable pieces of code, like data structures, is much less effective 
+than dynamic verification, as the states of these structures can change during execution.
 
 \subsection{ORTAC}
 \label{sub:ortac}
 
-\ortac is a tool for \rac in \ocaml programs. It provides a way to verify, at runtime, 
-assertions previously declared to check if they are satisfied~\cite{Filliatre_Jean-Christophe}. If these contracts, 
-defined using \why, are not met, the execution of \ortac is interrupted, and an error 
-is raised, allowing the programmer or tester to evaluate the portion of code that is 
-failing its logical assertion.
-\todo[inline]{Add information about how ORTAC works}
+\ortac is a tool for \rac in \ocaml programs. It translates \ocaml module interface with 
+\gospellang specifications into code to be verified~\cite{Filliatre}.
+
+It is an essential tool for dynamic verification in \ocaml, more specifically for 
+\rac. It is a bridge between the \gospellang specifications, \ocaml code, and the other tools 
+used for dynamic verification. Although it uses some plugins for the testing of the code it 
+generates, \ortac presents an ingenious model for the verification process.
+
+First, the programmer writes the \ocaml code and the \gospellang specifications. Here the 
+specifications are inserted in the code, allowing for a more clear and straightforward 
+way of defining the intended behaviour of the code. Then, \ortac translates the code 
+and the specifications into a format that can be verified by the plugins \todo{https://github.com/ocaml-gospel/ortac is the only reference I found, how do I put in the document?}. On their part, 
+plugins "bombard" the code with tests, checking multiple possibilities in a search 
+for errors.

@@ -68,7 +68,7 @@ This goal may arise questions such as:
 \subsection{Static Verification}
 \label{sub:static_verification}
 
-Source code - or bytecode - can be verified without the machine running it. This process allows to programmer 
+Source code can be verified without the machine running it. This process allows to programmer 
 to find error in type-checking, abstract interpretation, model checking, theorem proving and symbolic execution.
 This is a form of static verification - verifying the correctness of code without the need to run it.
 For programmers and testers, it is helpful to verify if the code being written/analysed is correct without 
@@ -79,17 +79,12 @@ being written, aided by the exhaustive analysis of the code, that covers all log
 a given domain. It is a resource-efficient approach that gives the garantee of correctness of critical 
 pieces of code. This leads to an overall efficiency in verifying code.
 
-\subsection{RAC}
+\subsection{Runtime Assertion Checking}
 \label{sub:rac}
 
-Runtime Assertion Checking (\rac) is a dynamic verification technique that consists of 
-inserting assertions - logical expressions that must be true at a certain point in the 
-execution - into the code to check for correctness during runtime. If these assertions fail, 
-an error is raised, indicating that the code is not behaving as expected.
-
-This is a powerful technique that can be used to verify preconditions, postconditions, and 
-invariants, proving to be of utmost importance in the verification of programs, especially 
-in the context of the \ocaml language~\cite{Filliatre_Jean-Christophe}, where the type system, 
+Runtime Assertion Checking (\rac) is a powerful technique that can be used to verify preconditions, postconditions, and 
+invariants, proving to be of utmost importance in the verification of programs, specially 
+in the context of the \ocaml language~\cite{Filliatre}, where the type system, 
 although powerful, may not be enough to ensure the correctness of the code.
 
 \rac is used during runtime, which by itself means that there needs to be a precondition required 
@@ -110,7 +105,7 @@ This technique can detect potential errors during compilation, thus ensuring tha
 able to run. Both dynamic and static verification can be combined to provide a more exhaustive 
 and complete verification of the code.
 
-One example of cooperation between the two techniques is \monitors - a technique that, 
+One example of cooperation between the two techniques is applied in \monitors - a technique that, 
 in first instance, uses static verification to verify some code, and then uses dynamic verification 
 to verify the parts of the code that previously were unable to be verified. This process is repeated until 
 the code is fully verified.
