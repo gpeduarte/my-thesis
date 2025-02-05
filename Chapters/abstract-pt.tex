@@ -8,6 +8,28 @@
 
 \typeout{NT FILE abstract-pt.tex}
 
+O desenvolvimento de software tem tido um impacto significativo no mundo, mas, por vezes, esse 
+impacto não foi positivo. Há muitos exemplos de falhas de software que causaram consequências 
+desastrosas. Para mitigar esse problema, \textit{testers} de software desenvolveram várias técnicas 
+que exigem um esforço humano considerável e tempo. Embora esses esforços tenham sido 
+bem-sucedidos em muitos casos, ainda ocorrem muitas falhas de software.
+
+O trabalho que propomos nesta dissertação visa melhorar a qualidade do software recorrendo 
+a técnicas de verificação formal, não como um substituto de testes, mas como uma ferramenta 
+aprimorada para ajudar a construir software mais confiável. O nosso trabalho baseia-se no 
+uso de \monitors, uma técnica que utiliza verificação formal para verificar a correção do 
+software. Isto é realizado através da verificação estática e, para as partes do código que 
+não puderam ser verificadas, com \rac ou \textit{Runtime Assertion Checking}. 
+Ferramentas como \gospellang, \ortac e \cameleer são utilizadas para implementar essa 
+técnica. O \why também é essencial para fornecer o suporte necessário a este trabalho.
+
+Aqui, fornecemos algumas informações sobre \ocaml – a linguagem na qual nos focaremos –, 
+sobre a própria verificação formal, bem como sobre \gospellang, \ortac, \cameleer e \why. Também 
+apresentamos o trabalho que realizamos em um exemplo de fila (Queue), mostrando resultados 
+promissores na implementação dos \monitors.
+
+Por fim, apresentamos algumas conclusões e perspetivas para trabalhos futuros.
+
 \keywords{
   \ocaml \and
   Verificação Formal \and
