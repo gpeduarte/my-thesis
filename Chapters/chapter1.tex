@@ -56,14 +56,45 @@ This goal may arise questions such as:
     \emph{Is it possible to combine static and dynamic verification for \ocaml programs?}
 \end{quote}
 
-*insert more questions here*
+The question above introduces a large scope, bigger than what can be covered in this work. 
+As such, we can split it into smaller questions:
 
-\todo[inline]{See with professor what other questions may arise and how to present them}
+\begin{enumerate}
+    \item Identify an executable subset of \gospellang;
+    \item Should we use \rac when Deductive Verification (Static Verification) is not enough?
+\end{enumerate}
 
-\begin{itemize}
-    \item State the usefulness of the thesis theme to solving real world problems
-    \item Present questions that may arise
-\end{itemize}
+Work in this dissertation will focus on the second question, as it emcompasses both static 
+and dynamic verification techniques in a single process/technique. It is important to note that 
+the described process in the second question will appear along the work, as it basically describes 
+the process of \monitors, one of the main focus here.
+
+For a more visual example, consider the following code snippet:
+
+\begin{gospel}
+    while B do S done
+    (* @invariant I *)
+\end{gospel}
+
+We can note that the invariant $I$ can be defined as a \monitor $M[[I]]$ - it will be verified statically, 
+and if it is not possible, a dynamic verification will be performed.
+
+Our work will focus on turning the above code into a more practical format, as we now present:
+
+\begin{gospel}
+    while B do
+        assert M[[I]];
+        S
+        assert M[[I]];
+    done
+\end{gospel}
+
+This change will allow us to verify the invariant in a more practical way by translating contracts 
+into built-in code assertions. This will produce both code and its verification process in the 
+same file and in a way that it can be verified semi-automatically. 
+
+For this to be done, we will have to understand tools like \cameleer and \ortac and their capacity 
+to generate \monitors for dynamic verification when static verification fails.
 
 \subsection{Static Verification}
 \label{sub:static_verification}
@@ -115,7 +146,7 @@ the code is fully verified.
 
 \begin{itemize}
     \item Describe how this work is expected to help with the current problems
-    and how it can be a resourceful asset
+    and how it can be a resourceful asset \todo{Complete this item};
 \end{itemize}
 
 \section{Report Structure}
