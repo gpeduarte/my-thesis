@@ -15,3 +15,15 @@
 
 \section{Gantt Chart}
 \label{section:gantt_chart}
+
+\begin{ganttchart}[
+        expand chart=\textwidth,
+        hgrid,
+        vgrid,
+        time slot format=isodate,
+        time slot unit=month
+    ]{2025-02-22}{2025-09-25}
+    \gantttitlecalendar*{2025-02-22}{2025-09-25}{
+        year, month=shortname
+    }
+\end{ganttchart}
