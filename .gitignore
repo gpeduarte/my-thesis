@@ -9,6 +9,7 @@ ICSE2009.pdf
 template.*
 # …except template.tex
 !template.tex
+!template.pdf
 
 ### LaTeX ###
 ## Core latex/pdflatex auxiliary files:
