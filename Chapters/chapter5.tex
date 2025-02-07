@@ -11,19 +11,66 @@
 \chapter{Work Plan}
 \label{cha:work_plan}
 
-\todo[inline]{See with professor}
-
 \section{Gantt Chart}
 \label{section:gantt_chart}
 
-\begin{ganttchart}[
-        expand chart=\textwidth,
-        hgrid,
-        vgrid,
-        time slot format=isodate,
-        time slot unit=month
-    ]{2025-03-01}{2025-09-30}
-    \gantttitlecalendar*{2025-03-01}{2025-09-30}{
-        year, month=shortname
-    }
-\end{ganttchart}
+\begin{itemize}
+    \setlength\itemsep{0bp}
+    \item{\emph{Task 1: Research}}\hspace{1em}
+    For the month of March, we will be researching study cases and analysing them in 
+    \ortac + \cameleer. This will provide data for the next tasks throughout the work.
+    \item{\emph{Task 2: Define E-Gospel}}\hspace{1em}
+    The next step will be to define E-Gospel - an executable portion of both \ocaml and 
+    specification/contract tools that can be used in \gospellang. The defining of E-Gospel 
+    will use the data from the research and analysis. This will be done throughout April 
+    until the middle of May.
+    \item{\emph{Task 3: Define Monitors}}\hspace{1em}
+    Using the previous steps as a base, we will define the specification of monitors that 
+    are best suited according the conclusions of the previous tasks. This will be done 
+    throughout May until the end of June.
+    \item{\emph{Task 4: Implement Monitors}}\hspace{1em}
+    During the month of July and August, we will implement the monitors previously defined 
+    and integrate the first set of data to test them. It is expected that the first 
+    implementation will be ready by the end of August.
+    \item{\emph{Task 5: Writing}}\hspace{1em}
+    The last month of the work will be dedicated to writing the final document. This will
+    occupy the month of September.
+\end{itemize}
+
+\begin{figure}[h]
+    \tikzset{every picture/.style={xscale=0.75,yscale=1,transform shape}}
+    \begin{ganttchart}[ y unit chart = 0.6cm,
+                        vgrid,
+                        bar top shift=-0.1,
+                        bar height=0.6,
+                        title height=0.7]{1}{28}
+      \gantttitle{March}{4}
+      \gantttitle{April}{4}
+      \gantttitle{May}{4}
+      \gantttitle{June}{4}
+      \gantttitle{July}{4}
+      \gantttitle{August}{4}
+      \gantttitle{September}{4}\\
+      \gantttitlelist{1,...,4}{1}
+      \gantttitlelist{1,...,4}{1}
+      \gantttitlelist{1,...,4}{1}
+      \gantttitlelist{1,...,4}{1}
+      \gantttitlelist{1,...,4}{1}
+      \gantttitlelist{1,...,4}{1}
+      \gantttitlelist{1,...,4}{1} \\
+    
+    \ganttbar{Research \& Analysis}{1}{4} \\
+    
+    \ganttbar{Define E-Gospel}{5}{10} \\
+    
+    \ganttbar{Define Monitors}{9}{16} \\
+    
+    \ganttbar{Implement Monitors}{17}{24} \\
+    
+    \ganttbar{Writing}{25}{28}
+        
+    \end{ganttchart}
+    \caption{Planned Schedule}
+    \label{ganttchart}
+    
+\end{figure}
