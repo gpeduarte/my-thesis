@@ -78,8 +78,6 @@ in a reusable manner throughout the codebase. As an example:
     let t = pop s
 \end{ocamlenv}
 
-\todo[inline]{This code is then exemplified in the following section, should it be here?}
-
 For programmers, it is a familiar and easy-to-understand way of defining and using 
 data structures and algorithms, as they can be previously declared and used throughout 
 the code.
@@ -151,7 +149,46 @@ These tools are strongly coupled to provide a more reliable way of verifying
 \subsection{Example}
 \label{sub:example}
 
-\todo[inline]{Add an example of a contract in GOSPEL and its translation to WhyML}
+Let's take the \texttt{Stack} module from the previous section and add some \gospellang. 
+The example should look something like this:
+
+\begin{gospel}
+    module type Stack = sig
+        type 'a t
+        (*@ mutable model contents: 'a list *)
+        val create : unit -> 'a t
+        (*@ s = create ()
+            ensures s.contents = [] *)
+        val push : 'a -> 'a t -> unit
+        (*@ push x s
+            modifies s.contents
+            ensures s.contents = x :: (old s.contents) *)
+        val pop : 'a t -> 'a
+        (*@ r = pop s
+            requires s.contents <> []
+            modifies s.contents
+            ensures s.contents = (List.tl (old s.contents))
+            ensures r = List.hd (old s.contents) *)
+    end
+\end{gospel}
+
+The \gosp{mutable}, \gosp{ensures}, \gosp{modifies}, and \gosp{requires} are all specifications, 
+or contracts, defined in \gospellang. They specificy what each function should do.
+
+The \gosp{mutable} keyword is used to define the state of the data structure, in this case, 
+that the \texttt{contents} of the stack are allowed to be changed during runtime.
+
+The keyword \gosp{ensures} is used to define the expected outcome of the function, or what the function 
+should return. In the case of the \texttt{push} function, it should return the stack with 
+the new element added to the top of the old values, defined by \gosp{old s.contents}.
+
+For the \texttt{pop} function, the \gosp{requires} keyword is used to define a precondition, 
+a state that must be true when the execution enters the function. Here, it is defined that 
+the stack must not be empty.
+
+Lastly, the \gosp{modifies} keyword is used to define that a certain data structure is being 
+altered during the execution of the function. During \texttt{pop}, the \texttt{contents} of 
+the stack are being modified, by removing the first element.
 
 \section{Why3}
 \label{sec:why3}
@@ -253,6 +290,6 @@ generates, \ortac presents an ingenious model for the verification process.
 First, the programmer writes the \ocaml code and the \gospellang specifications. Here the 
 specifications are inserted in the code, allowing for a more clear and straightforward 
 way of defining the intended behaviour of the code. Then, \ortac translates the code 
-and the specifications into a format that can be verified by the plugins \todo{https://github.com/ocaml-gospel/ortac is the only reference I found, how do I put in the document?}. On their part, 
-plugins "bombard" the code with tests, checking multiple possibilities in a search 
-for errors.
+and the specifications into a format that can be verified by the plugins~\cite{Filliatre}. 
+On their part, plugins "bombard" the code with tests, checking multiple possibilities in a 
+search for errors.
