@@ -18,13 +18,11 @@
 \chapter{State of the Art}
 \label{cha:state_of_the_art}
 
-\todo[inline]{What to write in this section?}
-
 \section{Combine Static and Dynamic Verification}
 \label{sec:combine_static_and_dynamic_verification}
 
 This work that we propose in similar to that of Soares, Chirica and Pereira's~\cite{Soares_Chirica_Pereira2024}. 
-  This work circle around \gospellang, one of the tools used in 
+This dissertation circles around \gospellang, one of the tools used in 
 dynamic verification, and its relation to its static counterparts. What we propose to do with this work 
 diverges from this, as we focus in combining the two in a unique technique, called \monitors, that 
 verifies the program initially with static verification, and then, when that process concludes, resorts to 
@@ -40,3 +38,48 @@ Currently, the combination of these two techniques is either theoretical or it e
 What we propose is directed to a single and efficient way of fully verifying an \ocaml program resorting to 
 tools that focus in either static or dynamic strands of software verification. Both can be used in a way that 
 one strengthens the disadvantages of the other, and vice-versa.
+
+\section{Current Tools}
+\label{sec:current_tools}
+
+In the real world, there are many tools that can be used to verify software. 
+Examples such as \why, Frama-C, SPARK~\cite{Kosmatov2014} present types of tools that are used 
+for verification of software. \why focuses on the verification of \ocaml programs, while Frama-C 
+focuses on the verification of C programs. SPARK is a technology that focuses on the verification 
+of Ada and also C/C++ programs. They provide coverage for different languages, but they all 
+focus on static verification and their goal is to prove the correctness of the software.
+
+The tools that focus on dynamic verification - more specifically, runtime assertion checking, 
+or \rac for short - are also used for the same purpose, with a different approach~\ref{Maurica2018}. 
+\begin{itemize}
+  \item JML, or Java Modeling Language, is a tool that is used to express specifications of Java.
+  \item ACSL, or ANSI/ISO C Specification Language, is a tool that is used to express specifications of ANSI-C.
+  \item SPARK focuses on the verification of Ada programs.
+\end{itemize}
+These are some of the examples of tools that are used for dynamic verification. Their objective 
+is to verify software during runtime, checking for behaviour that is not expected.
+
+\textit{Eiffel} is a programming language that has a built-in assertion language~\cite{Maurica2018}. 
+At the time of its creation, it was one of the first languages to have this feature, and it presented 
+a new way of thinking about software verification. Designed in the 1980s, it was a language that 
+focused on the development of software that was correct by construction. This means that the 
+software was developed in a way that it was correct from the beginning. It had a built-in assertion 
+language that allowed the programmer to express the specifications of the software. Contracts, 
+static type checking, garbage collection are just some of the features that \textit{Eiffel} has. 
+
+Due to the fact that this language focused in the development of software that was correct from the 
+start, it influenced a lot of the tools that are used today. The tools above mentioned are 
+just some examples of tools that were influenced by \textit{Eiffel}.
+
+\section{Runtime Assertion Checking - Executable Specifications}
+
+Although dynamic verification is in itself a powerful tool for the verification of systems, 
+developers found that it was necessary to have a way to express specifications directly in the 
+code. This is where executable portions of specification languages come in. 
+
+ACSL, as mentioned before, expresses specifications, but it is not executable. Thus, 
+E-ACSL was created. It is a tool that is used to express specifications 
+amidst the code, making those specifications executable. This tool translates C code with 
+specifications into C code that is instrumented with assertions. It is a conversion tool 
+that makes verification simpler and more efficient~\cite{Maurica2018}. This is one of the 
+principles that we will use in our work, as E-ACSL is only designed for C programs.
