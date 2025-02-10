@@ -18,7 +18,32 @@
 \chapter{State of the Art}
 \label{cha:state_of_the_art}
 
-\todo[inline]{Add chapter introduction}
+This chapter is reserved for the current state of software verification,
+focusing on the tools that are used for this purpose. We present some 
+of the tools and how they are used, as well as a brief history of the 
+development of software verification, from \textit{Eiffel} to the present day.
+The objective of the State of the Art is to provide a better understanding 
+of the current state of the theme of this dissertation, giving practical 
+examples and brief explanations of uses of both tools and techniques 
+in the everyday life of software verification.
+
+We start by presenting the current use of both static and dynamic verification tools 
+(\ref{sec:combine_static_and_dynamic_verification}), and how they are used in 
+combination, if that is being employed. It is an important section for us 
+to understand the current position of this vision of software verification, as 
+it directly impacts the work that we are proposing.
+
+We then present the current tools and their respective uses in section
+(\ref{sec:current_tools}). Here we focus in more detail on the tools that are 
+being described and the languages that they emcompass. This provides a more 
+"vivid" picture of the current state in the field of software verification.
+
+Finally, we present the concept of \rac, or Runtime Assertion Checking, and how 
+it is used in the context of executable specifications 
+(\ref{sec:runtime_assertion_checking_executable_specifications}). It is important 
+to note de difference between \rac and its derivatives of executable specifications, 
+as they will be very much present in our work. We provide the reader with a brief 
+example of ACSL and E-ACSL for a better understanding of the concept.
 
 \section{Combine Static and Dynamic Verification}
 \label{sec:combine_static_and_dynamic_verification}
@@ -52,12 +77,11 @@ of Ada and also C/C++ programs. They provide coverage for different languages, b
 focus on static verification and their goal is to prove the correctness of the software.
 
 The tools that focus on dynamic verification - more specifically, runtime assertion checking, 
-or \rac for short - are also used for the same purpose, with a different approach~\cite{Maurica2018}. 
-\todo[inline]{Add references from manuals}
+or \rac for short - are also used for the same purpose, with a different approach~\cite{Maurica2018}.
 \begin{itemize}
-  \item JML, or Java Modeling Language, is a tool that is used to express specifications of Java.
-  \item ACSL, or ANSI/ISO C Specification Language, is a tool that is used to express specifications of ANSI-C.
-  \item SPARK focuses on the verification of Ada programs.
+  \item JML, or Java Modeling Language, is a tool that is used to express specifications of Java~\cite{Leavens2008}.
+  \item ACSL, or ANSI/ISO C Specification Language, is a tool that is used to express specifications of ANSI-C~\cite{Baudin}.
+  \item SPARK focuses on the verification of Ada programs~\cite{Spark2022}.
 \end{itemize}
 These are some of the examples of tools that are used for dynamic verification. Their objective 
 is to verify software during runtime, checking for behaviour that is not expected.
@@ -75,6 +99,7 @@ start, it influenced a lot of the tools that are used today. The tools above men
 just some examples of tools that were influenced by \textit{Eiffel}.
 
 \section{Runtime Assertion Checking - Executable Specifications}
+\label{sec:runtime_assertion_checking_executable_specifications}
 
 Although dynamic verification is in itself a powerful tool for the verification of systems, 
 developers found that it was necessary to have a way to express specifications directly in the 
