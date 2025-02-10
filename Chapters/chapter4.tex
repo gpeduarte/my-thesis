@@ -13,6 +13,19 @@
 
 \todo[inline]{Add introduction to this chapter.}
 
+For our research and introduction on the topic of static and dynamic verification, 
+we had to prepare and test an example that would be used to demonstrate the 
+execution model of these techniques of verification. 
+
+The chosen example was a \texttt{Queue} implementation in \ocaml, 
+verified in \why and \gospellang. The \texttt{Queue} implementation 
+consists of two lists, one for the front of the queue and another for 
+the back. Its functioning is quite simple: it has two operations, 
+\texttt{push} and \texttt{pop}, that add and remove elements from the \texttt{Queue}. 
+This approach uses the first \text{List} as the elements that are 
+being removed through the \texttt{pop} operation, and the second \text{List} 
+as the elements that are being added through the \texttt{push} operation.
+
 \section{Queue Example}
 \label{sec:queue_example}
 
