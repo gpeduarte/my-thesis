@@ -79,8 +79,8 @@ focus on static verification and their goal is to prove the correctness of the s
 The tools that focus on dynamic verification - more specifically, runtime assertion checking, 
 or \rac for short - are also used for the same purpose, with a different approach~\cite{Maurica2018}.
 \begin{itemize}
-  \item JML, or Java Modeling Language, is a tool that is used to express specifications of Java~\cite{Leavens2008}.
-  \item ACSL, or ANSI/ISO C Specification Language, is a tool that is used to express specifications of ANSI-C~\cite{Baudin}.
+  \item JML, or Java Modeling Language, is a language that is used to express specifications of Java~\cite{Leavens2008}.
+  \item ACSL, or ANSI/ISO C Specification Language, is a language used to express specifications of C~\cite{Baudin}.
   \item SPARK focuses on the verification of Ada programs~\cite{Spark2022}.
 \end{itemize}
 These are some of the examples of tools that are used for dynamic verification. Their objective 
@@ -101,9 +101,7 @@ just some examples of tools that were influenced by \textit{Eiffel}.
 \section{Runtime Assertion Checking - Executable Specifications}
 \label{sec:runtime_assertion_checking_executable_specifications}
 
-\todo[inline]{Try to better explain the concept of executable specifications. Add references.}
-
-Although dynamic verification is in itself a powerful tool for the verification of systems, 
+Although dynamic verification is in itself a powerful technique for the verification of systems, 
 developers found that it was necessary to have a way to express specifications directly in the 
 code. This is where executable portions of specification languages come in. 
 
@@ -113,3 +111,18 @@ amidst the code, making those specifications executable. This tool translates C 
 specifications into C code that is instrumented with assertions. It is a conversion tool 
 that makes verification simpler and more efficient~\cite{Maurica2018}. This is one of the 
 principles that we will use in our work, as E-ACSL is only designed for C programs.
+
+This is what we hope to accomplish with our work. We want to create a tool that is able to 
+express specifications into \ocaml programs, making them executable. We hope to produce a 
+\gospellang executable specification language that is able to express the specifications 
+produced by the programmer, and converting them into assertions, inserted in the right 
+places of the code. Thus, E-GOSPEL will provide a step forward in the verification of 
+\ocaml, allowing programmers specialized in this language to use the tool to verify their 
+software in a more efficient and robust way. It is also a step towards \monitor implementation, 
+as it is a technique that has some promising results in an area where \monitors are 
+inserted in.
+
+Executable Specification Languages bridge the gap between what the programmer wants the 
+program to do and what the system will try to verify in the code. It is a way to express 
+the desire of the programmer directly in the code, making it easier to verify the software as 
+verification and code are being executed in the same environment.

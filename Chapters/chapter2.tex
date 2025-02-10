@@ -262,12 +262,14 @@ To verify the correctness of the \texttt{factorial} function, we can insert asse
 to check for preconditions, postconditions, and invariants. For example: 
 
 \begin{whylang}
-    let rec factorial n =
-        assert { n >= 0 }
-        if n = 0 then 1
+    let rec factorial (n: int) : int
+        assume { n >= 0 }
+        = if n = 0 then 1
         else n * factorial (n - 1)
         assert { result >= 1 }
 \end{whylang}
+
+\todo[inline]{See "assume" with professor.}
 
 This example provides a simple but really important illustration of how \rac works, as well 
 as what our work will focus on. The assertions are inserted into the code, and when the 
