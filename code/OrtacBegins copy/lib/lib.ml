@@ -3,17 +3,27 @@ include List
 type 'a queue = {
   mutable front : 'a list;
   mutable back : 'a list;
+  mutable size : int;
 }
 
+let[@logic] is_empty q = q.size = 0
+
 let make () =
-  { front = []; back = [] }
+  { front = []; back = []; size = 0 }
 
 let pop a = 
-  match a.front with
-  | [] -> (match List.rev a.back with
-          | [] -> failwith "empty"
-          | x::xs -> a.front <- xs; a.back <- []; Some x)
-  | x::xs -> a.front <- xs; Some x
+  let x =
+    | [] -> raise Not_found
+    | [ x ] ->
+        a.front <- List.rev a.rear;
+        a.rear <- [];
+        x
+    | x :: xs ->
+        a.front <- xs;
+        x
+  in
+  a.size <- a.size - 1;
+  x
 
 let push a x =
   a.back <- x::a.back

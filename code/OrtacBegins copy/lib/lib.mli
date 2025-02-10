@@ -1,10 +1,15 @@
 type 'a t
 (*@ mutable model front : 'a list 
-    mutable model back : 'a list*)
+    mutable model back : 'a list
+    mutable model size : int*)
+
+val is_empty : 'a t -> bool
+(*@ b = is_empty q 
+    ensures b <-> q.size = 0*)
 
 val make : int -> 'a -> 'a t
-(*@ t = make i a 
-    ensures List.length t.back = 0 && List.length t.front = 0*)
+(*@ t = make ()
+    ensures t.back = [] && t.front = [] && size = 0*)
 
 val pop : 'a t -> 'a
 (*@ a = pop t 

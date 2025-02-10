@@ -11,6 +11,31 @@
 \chapter{Background}
 \label{cha:background}
 
+In this chapter, we will present the concepts and tools that are essential for the 
+understanding of the work that we propose. We will start by presenting the concept of 
+Formal Verification (\ref{sec:formal_verification}) to present one the pillars of software 
+verification, as it is one of the fundamental concepts that we work with. 
+
+Then, we will proceed to present \ocaml (\ref{sec:ocaml}), the language that we will be the 
+focus of this dissertation. We will present its features and how it can be useful for the tools 
+that we will be using. It provides an overview of the language, as well as some of the most 
+relevant features, such as modules, functors and higher order functions. All of these will be 
+presented with examples to better illustrate the concepts.
+
+After that, we will present \gospellang and \cameleer (\ref{sec:gospel_and_cameleer}), two tools 
+used for both static (also referenced as deductive) and dynamic (also referenced as \rac) verification. 
+They are tools that are used to provide \ocaml code with formal contracts, such as preconditions, 
+postconditions, invariants and other specifications. These will be explained more in depth in the 
+section dedicated to them, as well as some examples for better understanding. 
+
+The section \ref{sec:why3} will be dedicated to \why and its usages in software verification. 
+In that section we also provide some insight to the solvers that are used in the platform. 
+
+Lastly, we will present \rac (\ref{sec:rac}), a technique that is used to verify code during runtime. 
+We provide details on how it works (\ref{sub:technique}), how it relates to static verification 
+(\ref{sub:relation_with_static_verification}), and how it is used in \ortac (\ref{sub:ortac}), a tool 
+of utmost importance for our work.
+
 \section{Formal Verification}
 \label{sec:formal_verification}
 
@@ -95,10 +120,15 @@ and enable better code organization.
 
 \begin{ocamlenv}
     module type Stack = sig
+
         type 'a t
+
         val create : unit -> 'a t
+
         val push : 'a -> 'a t -> unit
+
         val pop : 'a t -> 'a
+
     end
 \end{ocamlenv}
 
@@ -154,21 +184,26 @@ The example should look something like this:
 
 \begin{gospel}
     module type Stack = sig
+
         type 'a t
         (*@ mutable model contents: 'a list *)
+
         val create : unit -> 'a t
         (*@ s = create ()
             ensures s.contents = [] *)
+
         val push : 'a -> 'a t -> unit
         (*@ push x s
             modifies s.contents
             ensures s.contents = x :: (old s.contents) *)
+
         val pop : 'a t -> 'a
         (*@ r = pop s
             requires s.contents <> []
             modifies s.contents
             ensures s.contents = (List.tl (old s.contents))
             ensures r = List.hd (old s.contents) *)
+
     end
 \end{gospel}
 
@@ -195,15 +230,54 @@ the stack are being modified, by removing the first element.
 
 \ocaml in itself is a powerful language, but it lacks the tools to provide clear 
 and concise specifications for the code. \why is a platform that provides a framework 
-for deductive program verification. It allows for the specification of programs, 
+for deductive program verification. It allows for the specification of programs, such as the ones 
 described previously in section~\ref{sec:gospel_and_cameleer}, to be verified using 
 logical verification conditions. It works with SMT solvers, such as \zthree, \altergo, 
 and \coq.
 
+\why has its own specification language, called WhyML, which is used to define the 
+contracts and the logical verification conditions. It is a language that is based on 
+functional languages, as it contains constructs that are similar to those found in 
+functional languages, such as \ocaml. These aspects are pattern-matching, algebraic types 
+and polymorphism~\cite{Pereira}. Being a specification language means that its importance is 
+in the verification of code statically, before it is exectuted.
+
+When a program is verified using \why, it generates verification conditions that are 
+sent to the solvers. These solvers then try to prove the conditions, and if they are 
+proven, the program is considered correct. If not, the solvers provide counterexamples 
+that can be used to debug the code. It allows for full verification of the code in terms 
+of type-checking, logical verification, the use of polymorphism, and other features that 
+are essencial for the proper functioning of the program.
+
+As an example, consider the following code snippet: 
+
+\begin{whylang}
+    let rec factorial (n: int) : int
+        requires { n >= 0 }
+        ensures { result >= 1 }
+    = if n = 0 then 1 else n * factorial (n - 1)
+\end{whylang}
+
+To verify the correctness of the \texttt{factorial} function, we can insert assertions 
+to check for preconditions, postconditions, and invariants. For example: 
+
+\begin{whylang}
+    let rec factorial n =
+        assert { n >= 0 }
+        if n = 0 then 1
+        else n * factorial (n - 1)
+        assert { result >= 1 }
+\end{whylang}
+
+This example provides a simple but really important illustration of how \rac works, as well 
+as what our work will focus on. The assertions are inserted into the code, and when the 
+function is executed, the assertions are checked. If they fail, an error is raised, indicating 
+that the code is not behaving as expected. This is a useful technique for \rac, although 
+here it is used in a static verification context, resorting to SMT solvers.
+
 \section{Runtime Assertion Checking}
 \label{sec:rac}
 
-\todo[inline]{Separation of this section into below subsections subsections}
 There are several approaches to formal verification, such as static verification, 
 which is based on the analysis of static code (with an example being type checking), and dynamic 
 verification, which is based on the execution of the code, with the use of 
