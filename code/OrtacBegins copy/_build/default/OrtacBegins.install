@@ -1,0 +1,8 @@
+lib: [
+  "_build/install/default/lib/OrtacBegins/META"
+  "_build/install/default/lib/OrtacBegins/dune-package"
+  "_build/install/default/lib/OrtacBegins/opam"
+]
+bin: [
+  "_build/install/default/bin/OrtacBegins"
+]

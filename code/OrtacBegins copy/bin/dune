@@ -1,0 +1,4 @@
+(executable
+ (public_name OrtacBegins)
+ (name main)
+ (libraries OrtacBegins qcheck-core qcheck-stm.sequential ortac-runtime ortac-runtime-qcheck-stm))
