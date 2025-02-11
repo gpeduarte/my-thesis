@@ -27,9 +27,130 @@ as the elements that are being added through the \texttt{push} operation.
 \section{Queue Example}
 \label{sec:queue_example}
 
-\todo[inline]{Present the queue example: finish the implementation and show the results.}
+The implementation of a \gosp{Queue} we opted for a double list approach, 
+where the first list is the front of the queue and the second list is the back.
+The principle behind this implementation is described above, where the 
+\gosp{push} operation adds elements to the back of the queue and the 
+\gosp{pop} operation removes elements from the front of the queue.
 
-\begin{itemize}
-    \item DV
-    \item RAC
-\end{itemize}
+\subsection{Implementation}
+\label{subsec:implementation}
+
+Below is our implementation of the \gosp{Queue} in \ocaml:
+
+\begin{gospel}
+    open List
+
+    type 'a queue = {
+        mutable front : 'a list;
+        mutable back : 'a list;
+        mutable size : int;
+    }
+
+    let[@logic] is_empty q = q.size = 0
+
+    let make () =
+    { front = []; back = []; size = 0 }
+
+    let pop a = 
+    let x =
+        | [] -> raise Not_found
+        | [ x ] ->
+            a.front <- List.rev a.back;
+            a.back <- [];
+            x
+        | x :: xs ->
+            a.front <- xs;
+            x
+    in
+    a.size <- a.size - 1;
+    x
+
+    let push a x =
+        if is_empty a then a.front <- [ x ] else a.back <- x :: a.back;
+        a.size <- a.size + 1
+\end{gospel}
+
+As one can observe, we opted for a definition of \gosp{Queue} as a record type, 
+with three fields: \gosp{front}, \gosp{back} and \gosp{size}. The \gosp{front} 
+and \gosp{back} fields are lists of elements of type \gosp{'a} - meaning a certain type 
+not yet defined -, and the \gosp{size} field is an integer that represents the 
+number of elements in the \gosp{Queue}.
+
+The \gosp{is_empty} function is a logical function that returns \gosp{true} if the 
+size field of the \gosp{Queue q} is equal to zero, and \gosp{false} otherwise. 
+
+The \gosp{make} function is a constructor for the \gosp{Queue} type, that returns 
+a new \gosp{Queue} with the \gosp{front} and \gosp{back} fields as empty lists.
+
+The \gosp{pop} function removes the first element of the \gosp{Queue} and returns it. 
+If the \gosp{Queue} is empty, it raises a \gosp{Not_found} exception. If the \gosp{front} 
+only has one element, it reverses the \gosp{back} list and assigns it to the \gosp{front}, 
+clearing the \gosp{back} list in the process and returning the first value. If the 
+\gosp{front} has more than one element, it removes the first element of the \gosp{front} 
+list and returns it. Finally, it decrements the \gosp{size} field by one.
+
+The \gosp{push} function adds an element to the \gosp{Queue}. If the \gosp{Queue} is empty, 
+it assigns the element to the \gosp{front} list. Otherwise, it adds the element to the 
+\gosp{back} list. In both cases, it increments the \gosp{size} field by one.
+
+\subsection{Specification}
+\label{subsec:specification}
+
+With the implementation of the \gosp{Queue}, we can now specify the intended behavior 
+of its operations. We used \gospellang contracts to introduce the necessary specifications 
+for further testing. Below is our specification:
+
+\begin{gospel}
+    type 'a t
+    (*@ mutable model view: 'a list *)
+
+    val is_empty : 'a t -> bool
+    (*@ b = is_empty a 
+        ensures b <-> t.view = []*)
+
+    val make : int -> 'a -> 'a t
+    (*@ t = make ()
+        ensures t.view = []*)
+
+    val pop : 'a t -> 'a
+    (*@ a = pop t 
+        modifies t.view
+        requires t.view <> []*
+        ensures t.view = 
+            if old t.view = []
+            then [] 
+            else List.tl (old t.view)
+        ensures if old t.view = [] then false
+            else a = List.hd (old t.view)*)
+
+    val push : 'a t -> 'a -> 'a
+    (*@ push t a
+        modifies t.view
+        ensures t.view = append_last a (old t.view)*)
+\end{gospel}
+
+This interface has all the specifications that present the behavior of our \gosp{Queue} 
+implementation. We found it necessary to add a \gosp{model view} field to the \gosp{Queue} 
+type, to allow for the visualization of its elements as a simple \ocaml list. 
+
+The \gosp{is_empty} function returns \gosp{true} if the \gosp{Queue} is empty, and 
+\gosp{false} otherwise. The \gosp{<->} operator is a logical equivalence operator, 
+meaning that the value of \gosp{b} is equivalent to the expression of \gosp{t.view = []}. 
+
+The \gosp{make} function creates a new \gosp{Queue} with an empty \gosp{view} field. 
+It ensures that the creation of a new \gosp{Queue} results in an empty one, as 
+defined by \gosp{ensures} clause.
+
+The \gosp{pop} function removes the first element of the \gosp{Queue} and returns it. 
+This is the function with more complex specifications. It modifies the \gosp{view} field 
+with the \gosp{modifies} clause, and requires that the \gosp{view} field is not empty, with 
+\gosp{requires}. For the postconditions, the specifications have to ensure that, first, 
+the \gosp{t.view} field remains the same if there are no elements in the \gosp{Queue} 
+(\gosp{ensures t.view = if old t.view = [] then [] else List.tl (old t.view)}), and, secondly, 
+that the returned element is the first element of the \gosp{Queue} (\gosp{ensures if old t.view 
+= [] then false else a = List.hd (old t.view)}).
+
+Finally, \gosp{push} adds an element to the \gosp{Queue}. It modifies the \gosp{view} field 
+and ensures that the \gosp{t.view} field is the result of appending the new element to the 
+last position of the \gosp{Queue}, resorting to the \gosp{append_last} function.

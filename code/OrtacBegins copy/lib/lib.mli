@@ -21,4 +21,4 @@ val pop : 'a t -> 'a
 val push : 'a t -> 'a -> 'a
 (*@ push t a
     modifies t
-    ensures t.back = a::(old t.back)*)
+    ensures t.back = a::(old t.back) || (old t.front) <- [ a ]*)

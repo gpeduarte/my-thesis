@@ -26,12 +26,5 @@ let pop a =
   x
 
 let push a x =
-  a.back <- x::a.back
-
-let reverse array =
-  let len = List.length array in
-  for i = 0 to (len / 2) - 1 do 
-    let temp = array.(i) in
-    array.(i) <- array.(len - i - 1);
-    array.(len - i - 1) <- temp
-  done
+  if is_empty a then a.front <- [ x ] else a.rear <- x :: a.rear;
+  a.size <- a.size + 1
