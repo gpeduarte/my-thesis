@@ -146,10 +146,8 @@ The \gosp{pop} function removes the first element of the \gosp{Queue} and return
 This is the function with more complex specifications. It modifies the \gosp{view} field 
 with the \gosp{modifies} clause, and requires that the \gosp{view} field is not empty, with 
 \gosp{requires}. For the postconditions, the specifications have to ensure that, first, 
-the \gosp{t.view} field remains the same if there are no elements in the \gosp{Queue} 
-(\gosp{ensures t.view = if old t.view = [] then [] else List.tl (old t.view)}), and, secondly, 
-that the returned element is the first element of the \gosp{Queue} (\gosp{ensures if old t.view 
-= [] then false else a = List.hd (old t.view)}).
+the \gosp{t.view} field remains the same if there are no elements in the \gosp{Queue}, 
+and, secondly, that the returned element is the first element of the \gosp{Queue}.
 
 Finally, \gosp{push} adds an element to the \gosp{Queue}. It modifies the \gosp{view} field 
 and ensures that the \gosp{t.view} field is the result of appending the new element to the 
