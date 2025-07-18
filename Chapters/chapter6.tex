@@ -1,0 +1,40 @@
+%!TEX root = ../template.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% chapter6.tex
+%% NOVA thesis document file
+%%
+%% Chapter with lots of dummy text
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{NT FILE chapter6.tex}%
+
+\chapter{Tests}
+\label{cha:tests}
+
+\begin{align*}
+  E(\forall\ \vec{x}.e) &\triangleq \bot  \\
+  E(\exists\ \vec{x}.e) &\triangleq \bot  \\
+  E(x) &\triangleq \top  \\
+  E_{\Delta} (e_1\ \vert\vert\ e_2) &\triangleq E_{\Delta}(e_1) \land E_{\Delta}(e_2) \\
+  E_{\Delta} (e_1\ \&\&\ e_2) &\triangleq E_{\Delta}(e_1) \land E_{\Delta}(e_2) \\
+  E_{\Delta} (f\ \vec{e}) &\triangleq I_{\Delta} \land \forall_{e_i} E_{\Delta}(e_i) \\
+  E_{\Delta}(!e) &\triangleq I_{\Delta}(!) E_{\Delta}(e) \\
+  E_{\Delta}(\text{if}\ e_1\ \text{then}\ e_2\ \text{else}\ e_3) &\triangleq E_{\Delta}(e_1) \land E_{\Delta}(e_2) \land E_{\Delta}(e_3)  \\
+  E_{\Delta}(e_1 \oplus e_2) &\triangleq E_{\Delta}(e_1) \land E_{\Delta}(e_2) \\
+\end{align*}
+
+$$
+  \begin{array}{cc}
+    \text{Expression} & \text{Evaluation} \\
+    \hline
+    \forall\ \vec{x}.e & \bot  \\
+    \exists\ \vec{x}.e & \bot  \\
+    x & \top \\
+    e_1\ \vert\vert\ e_2 & E_{\Delta}(e_1) \land E_{\Delta}(e_2) \\
+    e_1\ \&\&\ e_2 & E_{\Delta}(e_1) \land E_{\Delta}(e_2) \\
+    f\ \vec{e} & I_{\Delta} \land \forall_{e_i} E_{\Delta}(e_i) \\
+    !e & I_{\Delta}(!) E_{\Delta}(e) \\
+    \text{if}\ e_1\ \text{then}\ e_2\ \text{else}\ e_3 & E_{\Delta}(e_1) \land E_{\Delta}(e_2) \land E_{\Delta}(e_3) \\
+    e_1 \oplus e_2 & E_{\Delta}(e_1) \land E_{\Delta}(e_2) \\
+  \end{array}
+$$
