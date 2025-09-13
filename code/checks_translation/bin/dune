@@ -1,0 +1,4 @@
+(executable
+ (public_name checks_translation)
+ (name main)
+ (libraries checks_translation))

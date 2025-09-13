@@ -1,0 +1,7 @@
+# dune init project checks_translation
+# OCAMLPARAM: unset
+# Shared cache: enabled-except-user-rules
+# Shared cache location: /Users/gpeduarte/.cache/dune/db
+# Workspace root:
+# /Users/gpeduarte/Documents/Tese/Papers/my-thesis/code/checks_translation
+# Auto-detected concurrency: 8
