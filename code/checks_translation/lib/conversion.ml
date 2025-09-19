@@ -19,6 +19,15 @@ let qualid2longident (x: qualid) =
   | Qpreid id -> { loc = id.pid_loc; txt = Lident id.pid_str }
   | Qdot (_, _) -> assert false (* TODO *)
 
+let mk_id x =
+  match x with
+  | Qpreid id ->
+    { spexp_desc = Sexp_ident (qualid2longident x);
+      spexp_loc = id.pid_loc;
+      spexp_loc_stack = [];
+      spexp_attributes = []; }
+  | Qdot (_, _) -> assert false (* TODO *)
+
 let rec is_translatable (t: term) =
   match t.term_desc with
   | Ttrue -> true
@@ -44,12 +53,13 @@ let rec is_translatable (t: term) =
   | Told e -> is_translatable e
 
 and term_desc2expr (t: term_desc) =
+  let no_label l = List.map (fun e -> (Nolabel, e)) l in
   match t with
   | Ttrue -> assert false (* TODO *)
   | Tfalse -> assert false (* TODO *)
   | Tconst _ -> assert false (* TODO *)
   | Tpreid x -> Sexp_ident (qualid2longident x)
-  | Tidapp (_, _) -> assert false (* TODO *)
+  | Tidapp (x, tl) -> Sexp_apply (mk_id x, no_label (List.map term2expr tl))
   | Tfield (_, _) -> assert false (* TODO *)
   | Tapply (_, _) -> assert false (* TODO *)
   | Tinfix (_, _, _) -> assert false (* TODO *)
@@ -70,11 +80,10 @@ and term_desc2expr (t: term_desc) =
 and term2expr (t: term) =
   if not (is_translatable t) then
     raise (Translation_error t.term_loc);
-  {  spexp_desc = term_desc2expr t.term_desc;
-     spexp_loc = t.term_loc;
-     spexp_loc_stack = [];
-     spexp_attributes = [];
-  }
+  { spexp_desc = term_desc2expr t.term_desc;
+    spexp_loc = t.term_loc;
+    spexp_loc_stack = [];
+    spexp_attributes = []; }
 
 and s_expression_desc (expr: s_expression_desc) =
   let exp2assert e = { e with spexp_desc = Sexp_assert e } in
