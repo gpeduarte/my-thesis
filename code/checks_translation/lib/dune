@@ -1,2 +1,3 @@
 (library
+ (libraries ppxlib ppxlib.ast gospel)
  (name checks_translation))
