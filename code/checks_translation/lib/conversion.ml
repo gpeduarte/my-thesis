@@ -37,19 +37,19 @@ let rec is_translatable (t: term) =
   | Tidapp (_, tl) -> List.for_all is_translatable tl
   | Tfield (e, _) -> is_translatable e
   | Tapply (e1, e2) -> is_translatable e1 && is_translatable e2
-  | Tinfix (_, _, _) -> assert false (* TODO *)
+  | Tinfix (e1, _, e2) -> is_translatable e1 && is_translatable e2
   | Tbinop (t1, _, t2) -> is_translatable t1 && is_translatable t2
   | Tnot _ -> true
   | Tif (e1, e2, e3) -> is_translatable e1 && is_translatable e2 && is_translatable e3
   | Tquant (_, _, _) -> false
-  | Tattr (_, _) -> assert false (* TODO *)
+  | Tattr (_, e) -> is_translatable e
   | Tlet (_, vbl, expr) -> is_translatable vbl && is_translatable expr
-  | Tcase (_, _) -> assert false (* TODO *)
-  | Tcast (_, _) -> assert false (* TODO *)
+  | Tcase (e, el) -> is_translatable e && List.for_all (fun (_, t) -> is_translatable t) el
+  | Tcast (_, e) -> is_translatable e
   | Ttuple t -> List.for_all is_translatable t
-  | Trecord _ -> assert false (* TODO *)
-  | Tupdate (_, _) -> assert false (* TODO *)
-  | Tscope (_, _) -> assert false (* TODO *)
+  | Trecord al -> List.for_all (fun (_, v) -> is_translatable v) al
+  | Tupdate (r, aul) -> is_translatable r && List.for_all (fun (_, v) -> is_translatable v) aul
+  | Tscope (_, e) -> is_translatable e
   | Told e -> is_translatable e
 
 and term_desc2expr (t: term_desc) =
