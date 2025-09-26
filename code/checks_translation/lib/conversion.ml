@@ -45,7 +45,7 @@ let rec is_translatable (t: term) =
   | Tattr (_, e) -> is_translatable e
   | Tlet (_, vbl, expr) -> is_translatable vbl && is_translatable expr
   | Tcase (e, el) -> is_translatable e && List.for_all (fun (_, t) -> is_translatable t) el
-  | Tcast (_, e) -> is_translatable e
+  | Tcast (e, _) -> is_translatable e
   | Ttuple t -> List.for_all is_translatable t
   | Trecord al -> List.for_all (fun (_, v) -> is_translatable v) al
   | Tupdate (r, aul) -> is_translatable r && List.for_all (fun (_, v) -> is_translatable v) aul
