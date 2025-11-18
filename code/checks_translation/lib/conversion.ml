@@ -82,21 +82,21 @@ and term2expr (t: term) =
     | Tidapp (x, tl) -> Sexp_apply (mk_id x, no_label (List.map term2expr tl))
     | Tfield (t, q) -> Sexp_field (term2expr t, qualid2longident q)
     | Tapply (e1, expl) -> Sexp_apply (term2expr e1, no_label (List.map term2expr expl))
-    | Tinfix (t1, op, t2) -> (* Perguntar*)
+    | Tinfix (t1, op, t2) -> (* Não existe Sexp *)
     | Tbinop (t1, op, t2) -> term2expr t1 op term2expr t2
     | Tnot t -> term2expr t
     | Tif (t1, t2, t3) ->
       Sexp_ifthenelse (term2expr t1, term2expr t2, Some (term2expr t3))
     | Tquant (_, _, _) -> assert false (* unreachable point in code *)
-    | Tattr (_, _) -> assert false (* TODO *)
+    | Tattr (_, _) -> assert false (* Não existe Sexp *)
     | Tlet (x, t1, t2) -> 
       Sexp_let (Nonrecursive, [mk_s_value_binding x t1], term2expr t2)
-    | Tcase (_, _) -> assert false (* TODO *)
-    | Tcast (_, _) -> assert false (* TODO *)
+    | Tcase (_, _) -> assert false (* Não existe Sexp *)
+    | Tcast (_, _) -> assert false (* Não existe Sexp *)
     | Ttuple tl -> Sexp_tuple (List.map term2expr tl)
     | Trecord tl -> Sexp_record (List.map term2expr tl)
-    | Tupdate (_, _) -> assert false (* TODO *)
-    | Tscope (_, _) -> assert false (* TODO *)
+    | Tupdate (_, _) -> assert false (* Não existe Sexp *)
+    | Tscope (_, _) -> assert false (* Não existe Sexp *)
     | Told _ -> assert false (* TODO: if there is time, implement translation for "old" *)
   in
   { spexp_desc = term_desc2expr t.term_desc;
