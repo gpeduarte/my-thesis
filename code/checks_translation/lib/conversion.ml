@@ -76,28 +76,28 @@ and term2expr (t: term) =
   let term_desc2expr (term_desc: term_desc) =
     match term_desc with
     | Ttrue -> Sexp_construct (mk_longident_loc "true" , None)
-    | Tfalse -> assert false (* TODO *)
-    | Tconst _ -> assert false (* TODO *)
+    | Tfalse -> Sexp_construct (mk_longident_loc "false" , None)
+    | Tconst c -> Sexp_constant (term2expr c)
     | Tpreid x -> Sexp_ident (qualid2longident x)
     | Tidapp (x, tl) -> Sexp_apply (mk_id x, no_label (List.map term2expr tl))
     | Tfield (t, q) -> Sexp_field (term2expr t, qualid2longident q)
-    | Tapply (_, _) -> assert false (* TODO *)
-    | Tinfix (_, _, _) -> assert false (* TODO *)
-    | Tbinop (_, _, _) -> assert false (* TODO *)
-    | Tnot _ -> assert false (* TODO *)
+    | Tapply (e1, expl) -> Sexp_apply (term2expr e1, no_label (List.map term2expr expl))
+    | Tinfix (t1, op, t2) -> (* Perguntar*)
+    | Tbinop (t1, op, t2) -> term2expr t1 op term2expr t2
+    | Tnot t -> term2expr t
     | Tif (t1, t2, t3) ->
       Sexp_ifthenelse (term2expr t1, term2expr t2, Some (term2expr t3))
     | Tquant (_, _, _) -> assert false (* unreachable point in code *)
     | Tattr (_, _) -> assert false (* TODO *)
-    | Tlet (x, t1, t2) ->
+    | Tlet (x, t1, t2) -> 
       Sexp_let (Nonrecursive, [mk_s_value_binding x t1], term2expr t2)
     | Tcase (_, _) -> assert false (* TODO *)
     | Tcast (_, _) -> assert false (* TODO *)
     | Ttuple tl -> Sexp_tuple (List.map term2expr tl)
-    | Trecord _ -> assert false (* TODO *)
+    | Trecord tl -> Sexp_record (List.map term2expr tl)
     | Tupdate (_, _) -> assert false (* TODO *)
     | Tscope (_, _) -> assert false (* TODO *)
-    | Told _ -> assert false (* TODO *)
+    | Told _ -> assert false (* TODO: if there is time, implement translation for "old" *)
   in
   { spexp_desc = term_desc2expr t.term_desc;
     spexp_loc = t.term_loc;
