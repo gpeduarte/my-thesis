@@ -1,0 +1,4 @@
+(executable
+ (public_name gospel2ocaml)
+ (name main)
+ (libraries gospel2ocaml))
