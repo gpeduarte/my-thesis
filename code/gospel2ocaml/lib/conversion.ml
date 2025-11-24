@@ -28,7 +28,13 @@ let mk_id x =
       spexp_attributes = []; }
   | Qdot (_, _) -> assert false (* TODO *)
 
-let mk_id_from_str str = 
+let mk_id_from_preid Preid.{ pid_str; pid_loc; _ } =
+  { spexp_desc = Sexp_ident { loc = Location.none; txt = Lident pid_str };
+    spexp_loc = pid_loc;
+    spexp_loc_stack = [];
+    spexp_attributes = []; }
+
+let mk_id_from_str str =
   { spexp_desc = Sexp_ident { loc = Location.none; txt = Lident str };
     spexp_loc = Location.none;
     spexp_loc_stack = [];
@@ -61,6 +67,21 @@ let rec is_translatable (t: term) =
   | Tscope (_, e) -> is_translatable e
   | Told e -> is_translatable e
 
+and pattern (p: pattern) =
+  let mk_pattern ppat_desc =
+    { ppat_desc; ppat_loc = p.pat_loc;
+      ppat_loc_stack = [];
+      ppat_attributes = []; } in
+  match p.pat_desc with
+  | Pwild -> mk_pattern Ppat_any
+  | Pvar x -> mk_pattern (Ppat_var (mk_string_loc x))
+  | Papp (_, _) -> assert false (* TODO *)
+  | Prec _ -> assert false (* TODO *)
+  | Ptuple _ -> assert false (* TODO *)
+  | Pas (_, _) -> assert false (* TODO *)
+  | Por (_, _) -> assert false (* TODO *)
+  | Pcast (_, _) -> assert false (* TODO *)
+
 and term2expr (t: term) =
   if not (is_translatable t) then
     raise (Translation_error t.term_loc);
@@ -79,7 +100,7 @@ and term2expr (t: term) =
     spvb_loc = t.term_loc;
   } in
   let mk_longident_loc x = { txt = Lident x; loc = t.term_loc } in
-  let binop_to_str x = 
+  let binop_to_str x =
     match x with
     | Tand -> "&&"
     | Tand_asym -> "&&"
@@ -87,29 +108,37 @@ and term2expr (t: term) =
     | Tor_asym -> "||"
     | _ -> assert false
   in
+  let mk_s_case spc_lhs spc_rhs =
+    { spc_lhs; spc_guard = None; spc_rhs; } in
   let term_desc2expr (term_desc: term_desc) =
     match term_desc with
     | Ttrue -> Sexp_construct (mk_longident_loc "true" , None)
     | Tfalse -> Sexp_construct (mk_longident_loc "false" , None)
-    | Tconst c -> Sexp_constant (term2expr c)
+    | Tconst (Pconst_integer (n, s)) ->
+        Sexp_constant (Pconst_integer (n, s))
+    | Tconst _ -> assert false (* TODO *)
     | Tpreid x -> Sexp_ident (qualid2longident x)
     | Tidapp (x, tl) -> Sexp_apply (mk_id x, no_label (List.map term2expr tl))
     | Tfield (t, q) -> Sexp_field (term2expr t, qualid2longident q)
-    | Tapply (e1, expl) -> Sexp_apply (term2expr e1, no_label (List.map term2expr expl))
-    | Tinfix (t1, op, t2) -> Sexp_apply (mk_id op, no_label [term2expr t1; term2expr t2])
-    | Tbinop (t1, op, t2) -> Sexp_apply (binop_to_str op, no_label [term2expr t1 op term2expr t2])
+    | Tapply (e1, expl) -> Sexp_apply (term2expr e1, [Nolabel, term2expr expl])
+    | Tinfix (t1, op, t2) ->
+      Sexp_apply (mk_id_from_preid op, no_label [term2expr t1; term2expr t2])
+    | Tbinop (t1, op, t2) ->
+      Sexp_apply (mk_id_from_str (binop_to_str op),
+                  no_label [term2expr t1; term2expr t2])
     | Tnot t -> Sexp_apply (mk_id_from_str "not", no_label [term2expr t])
     | Tif (t1, t2, t3) ->
       Sexp_ifthenelse (term2expr t1, term2expr t2, Some (term2expr t3))
     | Tquant (_, _, _) -> assert false (* unreachable point in code *)
-    | Tattr (_, t) -> term2expr t
-    | Tlet (x, t1, t2) -> 
+    | Tattr (_, _t) -> (* term2expr t *) assert false (* TODO *)
+    | Tlet (x, t1, t2) ->
       Sexp_let (Nonrecursive, [mk_s_value_binding x t1], term2expr t2)
     | Tcase (t, cl) -> Sexp_match (term2expr t,
-        List.map (fun (p, term) -> (mk_pattern p, term2expr term)) cl)
+        List.map (fun (p, term) -> mk_s_case (pattern p) (term2expr term)) cl)
     | Tcast (_, _) -> assert false (* Não existe Sexp *)
     | Ttuple tl -> Sexp_tuple (List.map term2expr tl)
-    | Trecord tl -> Sexp_record (List.map term2expr tl)
+    | Trecord tl ->
+      Sexp_record (List.map (fun (q, t) -> qualid2longident q, term2expr t) tl, None)
     | Tupdate (_, _) -> assert false (* Não existe Sexp *)
     | Tscope (_, _) -> assert false (* Não existe Sexp *)
     | Told _ -> assert false (* TODO: if there is time, implement translation for "old" *)

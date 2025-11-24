@@ -1,2 +1,3 @@
 (library
+ (libraries gospel ppxlib ppxlib.ast)
  (name gospel2ocaml))
