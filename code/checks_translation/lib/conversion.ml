@@ -28,6 +28,12 @@ let mk_id x =
       spexp_attributes = []; }
   | Qdot (_, _) -> assert false (* TODO *)
 
+let mk_id_from_str str = 
+  { spexp_desc = Sexp_ident { loc = Location.none; txt = Lident str };
+    spexp_loc = Location.none;
+    spexp_loc_stack = [];
+    spexp_attributes = []; }
+
 let mk_string_loc Preid.{ pid_str; pid_loc; _ } =
   { loc = pid_loc; txt = pid_str }
 
@@ -73,6 +79,14 @@ and term2expr (t: term) =
     spvb_loc = t.term_loc;
   } in
   let mk_longident_loc x = { txt = Lident x; loc = t.term_loc } in
+  let binop_to_str x = 
+    match x with
+    | Tand -> "&&"
+    | Tand_asym -> "&&"
+    | Tor -> "||"
+    | Tor_asym -> "||"
+    | _ -> assert false
+  in
   let term_desc2expr (term_desc: term_desc) =
     match term_desc with
     | Ttrue -> Sexp_construct (mk_longident_loc "true" , None)
@@ -82,16 +96,17 @@ and term2expr (t: term) =
     | Tidapp (x, tl) -> Sexp_apply (mk_id x, no_label (List.map term2expr tl))
     | Tfield (t, q) -> Sexp_field (term2expr t, qualid2longident q)
     | Tapply (e1, expl) -> Sexp_apply (term2expr e1, no_label (List.map term2expr expl))
-    | Tinfix (t1, op, t2) -> (* Não existe Sexp *)
-    | Tbinop (t1, op, t2) -> term2expr t1 op term2expr t2
-    | Tnot t -> term2expr t
+    | Tinfix (t1, op, t2) -> Sexp_apply (mk_id op, no_label [term2expr t1; term2expr t2])
+    | Tbinop (t1, op, t2) -> Sexp_apply (binop_to_str op, no_label [term2expr t1 op term2expr t2])
+    | Tnot t -> Sexp_apply (mk_id_from_str "not", no_label [term2expr t])
     | Tif (t1, t2, t3) ->
       Sexp_ifthenelse (term2expr t1, term2expr t2, Some (term2expr t3))
     | Tquant (_, _, _) -> assert false (* unreachable point in code *)
-    | Tattr (_, _) -> assert false (* Não existe Sexp *)
+    | Tattr (_, t) -> term2expr t
     | Tlet (x, t1, t2) -> 
       Sexp_let (Nonrecursive, [mk_s_value_binding x t1], term2expr t2)
-    | Tcase (_, _) -> assert false (* Não existe Sexp *)
+    | Tcase (t, cl) -> Sexp_match (term2expr t,
+        List.map (fun (p, term) -> (mk_pattern p, term2expr term)) cl)
     | Tcast (_, _) -> assert false (* Não existe Sexp *)
     | Ttuple tl -> Sexp_tuple (List.map term2expr tl)
     | Trecord tl -> Sexp_record (List.map term2expr tl)
